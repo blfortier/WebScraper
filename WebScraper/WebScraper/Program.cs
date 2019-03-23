@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
+using HtmlAgilityPack;
 
 namespace WebScraper
 {
-    partial class Program
+    partial class Stocks
     {
-        static void Main(string[] args)
+        static void Main(string[] args) 
         {
             ChromeDriver driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
@@ -25,8 +26,30 @@ namespace WebScraper
             ConnectToStockDataBase();       
         }
 
-        public class StockRepository
+        public class StocksRepository
         {
+            public static List<Stocks> GetStockList()
+            {
+                HtmlWeb site = new HtmlWeb();
+                site.AutoDetectEncoding = false;
+                site.OverrideEncoding = Encoding.Default;
+                HtmlDocument doc = site.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
+
+                var table = doc.DocumentNode.Descendants("table").Where(item => item.Attributes.Contains("class") && item.Attributes["class"].Value.Contains("simpTblRow")).First();
+                var rows = table.Descendants("tbody").First().Descendants("tr");
+                               
+                List <Stocks> stockList = new List<Stocks>();
+
+                foreach (var tr in rows)
+                {
+                    var fields = tr.Descendants("td");
+
+                 //   string url = fields.ElementAt()
+                }
+
+
+                return stockList;
+            }
 
 
         }

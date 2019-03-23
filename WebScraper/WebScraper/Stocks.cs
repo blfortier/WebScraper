@@ -4,7 +4,7 @@ namespace WebScraper
 {
     partial class Program
     {
-        public class Stock
+        public class Stocks
         {
             public int Id { get; set; }
             public string Symbol { get; set; }
