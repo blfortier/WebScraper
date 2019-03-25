@@ -6,55 +6,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
-using HtmlAgilityPack;
+//using HtmlAgilityPack;
 
 namespace WebScraper
 {
     partial class Stocks
-    {
+    {    
         static void Main(string[] args) 
         {
             ChromeDriver driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
 
             LogIn(driver);
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolios");
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
-            Scrape_DisplayStockData(driver);
+          //  Scrape_DisplayStockData(driver);
 
             ConnectToStockDataBase();       
         }
 
-        public class StocksRepository
-        {
-            public static List<Stocks> GetStockList()
-            {
-                HtmlWeb site = new HtmlWeb();
-                site.AutoDetectEncoding = false;
-                site.OverrideEncoding = Encoding.Default;
-                HtmlDocument doc = site.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
+        //public class StocksRepository
+        //{
+        //    public static List<Stocks> GetStockList()
+        //    {
+        //        HtmlWeb site = new HtmlWeb();
+        //        site.AutoDetectEncoding = false;
+        //        site.OverrideEncoding = Encoding.Default;
+        //        HtmlDocument doc = site.Load("https://finance.yahoo.com/portfolio/p_0/view/v1");
 
-                var table = doc.DocumentNode.Descendants("table").Where(item => item.Attributes.Contains("class") && item.Attributes["class"].Value.Contains("simpTblRow")).First();
-                var rows = table.Descendants("tbody").First().Descendants("tr");
+        //        var table = doc.DocumentNode.Descendants("table").Where(item => item.Attributes.Contains("class") && item.Attributes["class"].Value.Contains("simpTblRow")).First();
+        //        var rows = table.Descendants("tbody").First().Descendants("tr");
                                
-                List <Stocks> stockList = new List<Stocks>();
+        //        List <Stocks> stockList = new List<Stocks>();
 
-                foreach (var tr in rows)
-                {
-                    var fields = tr.Descendants("td");
+        //        foreach (var tr in rows)
+        //        {
+        //            var fields = tr.Descendants("td");
 
-                 //   string url = fields.ElementAt()
-                }
-
-
-                return stockList;
-            }
+        //         //   string url = fields.ElementAt()
+        //        }
 
 
-        }
+        //        return stockList;
+        //    }
 
 
+    }
+    
         public static void LogIn(ChromeDriver webScraper)
         {
             webScraper.Navigate().GoToUrl("https://login.yahoo.com/");
@@ -67,23 +65,17 @@ namespace WebScraper
         public static void Scrape_DisplayStockData(ChromeDriver webScraper)
         {
             IList<IWebElement> stockData = webScraper.FindElements(By.ClassName("simpTblRow"));
-            IList<IWebElement> tableHeaders = webScraper.FindElements(By.TagName("th"));
+          //  IList<IWebElement> tableHeaders = webScraper.FindElements(By.TagName("th"));
             Console.WriteLine("Total stocks: " + stockData.Count);
-            Console.WriteLine("Total headers: " + tableHeaders.Count);
+          //  Console.WriteLine("Total headers: " + tableHeaders.Count);
 
-            //tableHeaders.RemoveAt(9);
-            //tableHeaders.RemoveAt(10);
-            //tableHeaders.RemoveAt(11);
-            //tableHeaders.RemoveAt(13);
+         
+            //for (int i = 0; i < tableHeaders.Count; i++)
+            //{
+            //    Console.Write(" {0}", tableHeaders[i].Text);
+            //}
 
-            Console.WriteLine("Total headers: " + tableHeaders.Count);
-
-            for (int i = 0; i < tableHeaders.Count; i++)
-            {
-                Console.Write(" {0}", tableHeaders[i].Text);
-            }
-
-            for (int j = 0; j < stockData.Count; j++)
+        for (int j = 0; j < stockData.Count; j++)
                 Console.WriteLine(stockData[j].Text);
         }  
         
@@ -104,6 +96,8 @@ namespace WebScraper
             {
                 Console.WriteLine("Cannot open connection...");
             }
-        }        
-    }
+        } 
+    
+    
 }
+
