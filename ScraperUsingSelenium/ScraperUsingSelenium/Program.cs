@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ScraperUsingSelenium
 {
@@ -61,6 +62,8 @@ namespace ScraperUsingSelenium
             double[] avgVolume = new double[avgVolume_elements.Count];
             double[] marketCap = new double[marketCap_elements.Count];
 
+            Stock stock = new Stock();
+
             for (int i = 0; i < symbols.Length; i++)
             {
                 symbols[i] = Convert.ToString(symbol_elements[i].Text);
@@ -79,7 +82,7 @@ namespace ScraperUsingSelenium
                  marketTime[i] = Convert.ToString(marketTime_elements[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", marketTime[i], marketTime[i].GetType());
 
-                char trimVol = 'M';
+                char[] trimVol = { 'B' ,'M', 'K' };
                 volume[i] = Convert.ToDouble(volume_elements[i].Text.Trim(trimVol));
                 Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
                                              
@@ -87,19 +90,14 @@ namespace ScraperUsingSelenium
                 Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
 
                 shares[i] = 0;
-
-                //   shares[i] = Convert.ToInt32(shares_elements[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", shares[i], shares[i].GetType());
 
                 char trimCap = 'B';
                 marketCap[i] = Convert.ToDouble(marketCap_elements[i].Text.TrimEnd(trimCap));
                 Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
 
-                string[] stockObjectName = new string[symbols.Length];
-
-               
-                
-                var stock = new Stock(i, symbols[i],
+                          
+                stock = new Stock(symbols[i],
                                       lastPrice[i],
                                       change[i],
                                       changePercent[i],
@@ -109,45 +107,29 @@ namespace ScraperUsingSelenium
                                       shares[i],
                                       marketCap[i]);
 
-
-
                 Console.WriteLine("stock created");
-                Console.WriteLine(stock);
+
+                //string sql = "INSERT INTO Table VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+
+                //SqlCommand command = new SqlCommand(sql);
+                //command.Parameters["@Symbol"].Value = stock.Symbol;
+                //command.Parameters["@LastPrice"].Value = stock.LastPrice;
+                //command.Parameters["@Change"].Value = stock.Change;
+                //command.Parameters["@ChangePercent"].Value = stock.ChangePercent;
+                //command.Parameters["@MarketTime"].Value = stock.MarketTime;
+                //command.Parameters["@Volume"].Value = stock.Volume;
+                //command.Parameters["@AvgVol"].Value = stock.AvgVol;
+                //command.Parameters["@Shares"].Value = stock.Shares;
+                //command.Parameters["@MarketCap"].Value = stock.MarketCap;
+
+                //command.ExecuteNonQuery();
+                //Console.WriteLine("Stock added...");
+
+                //Console.WriteLine("stock created");
+                //Console.WriteLine(stock);
             }
 
-
-            //Console.WriteLine();
-
-            //foreach (var item in lastPrice_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in change_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in changePercent_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in marketTime_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in volume_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in avgVolume_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in shares_elements)
-            //    Console.WriteLine(item.Text);
-
-            //Console.WriteLine();
-            //foreach (var item in marketCap_elements)
-            //    Console.WriteLine(item.Text);
+           
 
         }
 

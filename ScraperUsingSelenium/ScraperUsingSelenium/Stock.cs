@@ -7,7 +7,6 @@ namespace ScraperUsingSelenium
 {
     class Stock
     {
-        public int Id { get; set; }
         public string Symbol { get; set; }
         public double LastPrice { get; set; }
         public double Change { get; set; }
@@ -22,11 +21,10 @@ namespace ScraperUsingSelenium
         {
 
         }
-        public Stock(int id, string symbol, double lastPrice,
+        public Stock(string symbol, double lastPrice,
                     double change, double changePercent, string time, 
                     double vol, double volAvg, int shares, double marketCap)
         {
-            this.Id = id;
             this.Symbol = symbol;
             this.LastPrice = lastPrice;
             this.Change = change;
