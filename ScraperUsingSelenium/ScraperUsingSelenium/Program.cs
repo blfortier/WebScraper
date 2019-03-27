@@ -34,6 +34,7 @@ namespace ScraperUsingSelenium
 
         public static void Scrape_DisplayStockData(ChromeDriver webScraper)
         {
+            webScraper.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             IList<IWebElement> stockData = webScraper.FindElements(By.ClassName("simpTblRow"));
             Console.WriteLine("Total stocks: " + stockData.Count);
 
@@ -52,65 +53,94 @@ namespace ScraperUsingSelenium
 
             string[] symbols = new string[symbol_elements.Count];
             double[] lastPrice = new double[lastPrice_elements.Count];
-            int i = 0;
-            int k = 0;
+            double[] change = new double[change_elements.Count];
+            double[] changePercent = new double[changePercent_elements.Count];
+            string[] marketTime = new string[marketTime_elements.Count];
+            double[] volume = new double[volume_elements.Count];
+            int[] shares = new int[shares_elements.Count];
+            double[] avgVolume = new double[avgVolume_elements.Count];
+            double[] marketCap = new double[marketCap_elements.Count];
 
-            foreach (var item in symbol_elements)
+            for (int i = 0; i < symbols.Length; i++)
             {
-                Console.WriteLine(item.Text);
-                symbols[i++] = Convert.ToString(item.Text);
+                symbols[i] = Convert.ToString(symbol_elements[i].Text);
+                Console.WriteLine("Parsed: {0} + {1}", symbols[i], symbols[i].GetType());
+
+                lastPrice[i] = Convert.ToDouble(lastPrice_elements[i].Text);
+                Console.WriteLine("Parsed: {0} + {1}", lastPrice[i], lastPrice[i].GetType());
+
+                change[i] = Convert.ToDouble(change_elements[i].Text);
+                Console.WriteLine("Parsed: {0} + {1}", change[i], change[i].GetType());
+
+                char trim = '%';
+                changePercent[i] = Convert.ToDouble(changePercent_elements[i].Text.TrimEnd(trim));
+                Console.WriteLine("Parsed: {0}% + {1}", changePercent[i], changePercent[i].GetType());
+
+                 marketTime[i] = Convert.ToString(marketTime_elements[i].Text);
+                Console.WriteLine("Parsed: {0} + {1}", marketTime[i], marketTime[i].GetType());
+
+                char trimVol = 'M';
+                volume[i] = Convert.ToDouble(volume_elements[i].Text.Trim(trimVol));
+                Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
+                                             
+                avgVolume[i] = Convert.ToDouble(avgVolume_elements[i].Text.Trim(trimVol));
+                Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
+
+                shares[i] = 0;
+
+                //   shares[i] = Convert.ToInt32(shares_elements[i].Text);
+                Console.WriteLine("Parsed: {0} + {1}", shares[i], shares[i].GetType());
+
+                char trimCap = 'B';
+                marketCap[i] = Convert.ToDouble(marketCap_elements[i].Text.TrimEnd(trimCap));
+                Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
+
+                //var stock+1 = new Stock(i, symbols[i], 
+                //                      lastPrice[i],
+                //                      change[i],
+                //                      changePercent[i],
+                //                      marketTime[i],
+                //                      volume[i],
+                //                      avgVolume[i],
+                //                      shares[i],
+                //                      marketCap[i]);
+                //Console.WriteLine("Stock created");
+                //Console.WriteLine(stock);
             }
-            // Console.WriteLine("last price length: {0}", lastPrice.Length);
-            foreach (var item in symbols)
-            {
-                Console.WriteLine("Parsed: {0} + {1}", item, item.GetType());
-            }
 
-            foreach (var item in lastPrice_elements)
-            {
-                Console.WriteLine(item.Text);
-                lastPrice[k++] = Convert.ToDouble(item.Text);
-            }
+            
+            //Console.WriteLine();
 
-            foreach (var item in lastPrice)
-            {
-                Console.WriteLine("Parsed: {0} + {1}", item, item.GetType());
-            }
+            //foreach (var item in lastPrice_elements)
+            //    Console.WriteLine(item.Text);
 
+            //Console.WriteLine();
+            //foreach (var item in change_elements)
+            //    Console.WriteLine(item.Text);
 
+            //Console.WriteLine();
+            //foreach (var item in changePercent_elements)
+            //    Console.WriteLine(item.Text);
 
-            Console.WriteLine();
+            //Console.WriteLine();
+            //foreach (var item in marketTime_elements)
+            //    Console.WriteLine(item.Text);
 
-            foreach (var item in lastPrice_elements)
-                Console.WriteLine(item.Text);
+            //Console.WriteLine();
+            //foreach (var item in volume_elements)
+            //    Console.WriteLine(item.Text);
 
-            Console.WriteLine();
-            foreach (var item in change_elements)
-                Console.WriteLine(item.Text);
+            //Console.WriteLine();
+            //foreach (var item in avgVolume_elements)
+            //    Console.WriteLine(item.Text);
 
-            Console.WriteLine();
-            foreach (var item in changePercent_elements)
-                Console.WriteLine(item.Text);
+            //Console.WriteLine();
+            //foreach (var item in shares_elements)
+            //    Console.WriteLine(item.Text);
 
-            Console.WriteLine();
-            foreach (var item in marketTime_elements)
-                Console.WriteLine(item.Text);
-
-            Console.WriteLine();
-            foreach (var item in volume_elements)
-                Console.WriteLine(item.Text);
-
-            Console.WriteLine();
-            foreach (var item in avgVolume_elements)
-                Console.WriteLine(item.Text);
-
-            Console.WriteLine();
-            foreach (var item in shares_elements)
-                Console.WriteLine(item.Text);
-
-            Console.WriteLine();
-            foreach (var item in marketCap_elements)
-                Console.WriteLine(item.Text);
+            //Console.WriteLine();
+            //foreach (var item in marketCap_elements)
+            //    Console.WriteLine(item.Text);
 
         }
 
