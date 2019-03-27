@@ -95,20 +95,27 @@ namespace ScraperUsingSelenium
                 marketCap[i] = Convert.ToDouble(marketCap_elements[i].Text.TrimEnd(trimCap));
                 Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
 
-                //var stock+1 = new Stock(i, symbols[i], 
-                //                      lastPrice[i],
-                //                      change[i],
-                //                      changePercent[i],
-                //                      marketTime[i],
-                //                      volume[i],
-                //                      avgVolume[i],
-                //                      shares[i],
-                //                      marketCap[i]);
-                //Console.WriteLine("Stock created");
-                //Console.WriteLine(stock);
+                string[] stockObjectName = new string[symbols.Length];
+
+               
+                
+                var stock = new Stock(i, symbols[i],
+                                      lastPrice[i],
+                                      change[i],
+                                      changePercent[i],
+                                      marketTime[i],
+                                      volume[i],
+                                      avgVolume[i],
+                                      shares[i],
+                                      marketCap[i]);
+
+
+
+                Console.WriteLine("stock created");
+                Console.WriteLine(stock);
             }
 
-            
+
             //Console.WriteLine();
 
             //foreach (var item in lastPrice_elements)
