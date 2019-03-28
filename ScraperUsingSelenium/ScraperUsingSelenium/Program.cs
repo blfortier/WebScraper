@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -21,7 +22,6 @@ namespace ScraperUsingSelenium
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
             Scrape_DisplayStockData(driver);
 
-            ConnectToStockDataBase();
         }
 
         public static void LogIn(ChromeDriver webScraper)
@@ -63,6 +63,11 @@ namespace ScraperUsingSelenium
             double[] marketCap = new double[marketCap_elements.Count];
 
             Stock stock = new Stock();
+            string connectionString = null;
+            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
+            string sql = "INSERT INTO StockInfo VALUES (@Id, @Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+            int idKey = 0;
 
             for (int i = 0; i < symbols.Length; i++)
             {
@@ -82,7 +87,7 @@ namespace ScraperUsingSelenium
                  marketTime[i] = Convert.ToString(marketTime_elements[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", marketTime[i], marketTime[i].GetType());
 
-                char[] trimVol = { 'B' ,'M', 'K' };
+                char[] trimVol = { 'B' ,'M', 'k' };
                 volume[i] = Convert.ToDouble(volume_elements[i].Text.Trim(trimVol));
                 Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
                                              
@@ -109,47 +114,102 @@ namespace ScraperUsingSelenium
 
                 Console.WriteLine("stock created");
 
-                //string sql = "INSERT INTO Table VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+                // ConnectToStockDataBase(stock);
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
 
-                //SqlCommand command = new SqlCommand(sql);
-                //command.Parameters["@Symbol"].Value = stock.Symbol;
-                //command.Parameters["@LastPrice"].Value = stock.LastPrice;
-                //command.Parameters["@Change"].Value = stock.Change;
-                //command.Parameters["@ChangePercent"].Value = stock.ChangePercent;
-                //command.Parameters["@MarketTime"].Value = stock.MarketTime;
-                //command.Parameters["@Volume"].Value = stock.Volume;
-                //command.Parameters["@AvgVol"].Value = stock.AvgVol;
-                //command.Parameters["@Shares"].Value = stock.Shares;
-                //command.Parameters["@MarketCap"].Value = stock.MarketCap;
+                    if (con.State == System.Data.ConnectionState.Open)
+                    {
+                        Console.WriteLine("Connection open...");
+                        //try
+                        //{
+                        using (SqlCommand command = new SqlCommand(sql, con))
+                        {
+                            command.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int));
+                            command.Parameters.Add(new SqlParameter("@Symbol", SqlDbType.VarChar));
+                            command.Parameters.Add(new SqlParameter("@LastPrice", SqlDbType.Float));
+                            command.Parameters.Add(new SqlParameter("@Change", SqlDbType.Float));
+                            command.Parameters.Add(new SqlParameter("@ChangePercent", SqlDbType.Float));
+                            command.Parameters.Add(new SqlParameter("@MarketTime", SqlDbType.VarChar));
+                            command.Parameters.Add(new SqlParameter("@Volume", SqlDbType.Float));
+                            command.Parameters.Add(new SqlParameter("@AvgVol", SqlDbType.Float));
+                            command.Parameters.Add(new SqlParameter("@Shares", SqlDbType.Int));
+                            command.Parameters.Add(new SqlParameter("@MarketCap", SqlDbType.Float));
 
-                //command.ExecuteNonQuery();
-                //Console.WriteLine("Stock added...");
+                            command.Parameters["@Id"].Value = i;
+                            command.Parameters["@Symbol"].Value = stock.Symbol;
+                            command.Parameters["@LastPrice"].Value = stock.LastPrice;
+                            command.Parameters["@Change"].Value = stock.Change;
+                            command.Parameters["@ChangePercent"].Value = stock.ChangePercent;
+                            command.Parameters["@MarketTime"].Value = stock.MarketTime;
+                            command.Parameters["@Volume"].Value = stock.Volume;
+                            command.Parameters["@AvgVol"].Value = stock.AvgVol;
+                            command.Parameters["@Shares"].Value = stock.Shares;
+                            command.Parameters["@MarketCap"].Value = stock.MarketCap;
 
-                //Console.WriteLine("stock created");
-                //Console.WriteLine(stock);
-            }
+                            command.ExecuteNonQuery();
+                            Console.WriteLine("{0} added...", stock.Symbol);
+                        }
+                        //}
+                        //catch
+                        //{
+                        //    Console.WriteLine("NOOOOO");
+                        //}
+                    }
+
+                }
+          
 
            
+            }
+
+
 
         }
 
-        public static void ConnectToStockDataBase()
+        public static void ConnectToStockDataBase(Stock currentStock)
         {
             string connectionString = null;
-            SqlConnection connect;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
-            connect = new SqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
-            try
-            {
-                connect.Open();
+            //try
+            //{
+                connection.Open();
                 Console.WriteLine("Connection open!");
-                // connect.Close();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Cannot open connection...");
-            }
+
+                string sql = "INSERT INTO Table VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+
+                command.Parameters.Add("@Symbol", SqlDbType.VarChar);
+                command.Parameters.Add("@LastPrice", SqlDbType.Float);
+                command.Parameters.Add("@Change", SqlDbType.Float);
+                command.Parameters.Add("@ChangePercent", SqlDbType.Float);
+                command.Parameters.Add("@MarketTime", SqlDbType.VarChar);
+                command.Parameters.Add("@Volume", SqlDbType.Float);
+                command.Parameters.Add("@AvgVol", SqlDbType.Float);
+                command.Parameters.Add("@Shares", SqlDbType.Int);
+                command.Parameters.Add("@MarketCap", SqlDbType.Float);
+
+                command.Parameters["@symbol"].Value = currentStock.Symbol;
+                command.Parameters["@lastprice"].Value = currentStock.LastPrice;
+                command.Parameters["@Change"].Value = currentStock.Change;
+                command.Parameters["@ChangePercent"].Value = currentStock.ChangePercent;
+                command.Parameters["@MarketTime"].Value = currentStock.MarketTime;
+                command.Parameters["@Volume"].Value = currentStock.Volume;
+                command.Parameters["@AvgVol"].Value = currentStock.AvgVol;
+                command.Parameters["@Shares"].Value = currentStock.Shares;
+                command.Parameters["@MarketCap"].Value = currentStock.MarketCap;
+
+                command.ExecuteNonQuery();
+                Console.WriteLine("{0} added...", currentStock.Symbol);                
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine("Cannot open connection...");
+            //}
         }
     }
 }
