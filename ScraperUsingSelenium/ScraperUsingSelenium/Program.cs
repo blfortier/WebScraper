@@ -52,46 +52,56 @@ namespace ScraperUsingSelenium
             IList<IWebElement> shares_elements = webScraper.FindElements(By.XPath("//*[@aria-label='Shares']"));
             IList<IWebElement> marketCap_elements = webScraper.FindElements(By.XPath("//*[@aria-label='Market Cap']"));
 
-            string[] symbols = new string[symbol_elements.Count];
-            double[] lastPrice = new double[lastPrice_elements.Count];
-            double[] change = new double[change_elements.Count];
-            double[] changePercent = new double[changePercent_elements.Count];
-            string[] marketTime = new string[marketTime_elements.Count];
-            string[] volume = new string[volume_elements.Count];
-            int[] shares = new int[shares_elements.Count];
-            string[] avgVolume = new string[avgVolume_elements.Count];
-            string[] marketCap = new string[marketCap_elements.Count];
+            ScrapedData scrape = new ScrapedData(symbol_elements, lastPrice_elements, change_elements, changePercent_elements,
+                                        marketTime_elements, volume_elements, avgVolume_elements, shares_elements, marketCap_elements);
+
+            ParseScrapedData(scrape);
+        }
+
+        private static void ParseScrapedData(ScrapedData extractedData)
+        {
+            int stockTotal = extractedData.StockSymbols.Count;
+
+            string[] symbols = new string[stockTotal];
+            double[] lastPrice = new double[stockTotal];
+            double[] change = new double[stockTotal];
+            double[] changePercent = new double[stockTotal];
+            string[] marketTime = new string[stockTotal];
+            string[] volume = new string[stockTotal];
+            string[] shares = new string[stockTotal];
+            string[] avgVolume = new string[stockTotal];
+            string[] marketCap = new string[stockTotal];                     
 
             Stock stock = new Stock();
 
-            for (int i = 0; i < symbols.Length; i++)
+            for (int i = 0; i < stockTotal; i++)
             {
-                symbols[i] = Convert.ToString(symbol_elements[i].Text);
+                symbols[i] = Convert.ToString(extractedData.StockVolumes[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", symbols[i], symbols[i].GetType());
 
-                lastPrice[i] = Convert.ToDouble(lastPrice_elements[i].Text);
+                lastPrice[i] = Convert.ToDouble(extractedData.StockLastPrices[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", lastPrice[i], lastPrice[i].GetType());
 
-                change[i] = Convert.ToDouble(change_elements[i].Text);
+                change[i] = Convert.ToDouble(extractedData.StockChanges[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", change[i], change[i].GetType());
 
                 char trim = '%';
-                changePercent[i] = Convert.ToDouble(changePercent_elements[i].Text.TrimEnd(trim));
+                changePercent[i] = Convert.ToDouble(extractedData.StockChangePercents[i].Text.TrimEnd(trim));
                 Console.WriteLine("Parsed: {0}% + {1}", changePercent[i], changePercent[i].GetType());
 
-                marketTime[i] = Convert.ToString(marketTime_elements[i].Text);
+                marketTime[i] = Convert.ToString(extractedData.StockMarketTimes[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", marketTime[i], marketTime[i].GetType());
 
-                volume[i] = Convert.ToString(volume_elements[i].Text);
+                volume[i] = Convert.ToString(extractedData.StockVolumes[i].Text);
                 Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
 
-                avgVolume[i] = Convert.ToString(avgVolume_elements[i].Text);
+                avgVolume[i] = Convert.ToString(extractedData.StockAvgVolumes[i].Text);
                 Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
 
-                shares[i] = 0;
+                shares[i] = Convert.ToString(extractedData.StockShares[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", shares[i], shares[i].GetType());
 
-                marketCap[i] = Convert.ToString(marketCap_elements[i].Text);
+                marketCap[i] = Convert.ToString(extractedData.StockMarketCaps[i].Text);
                 Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
 
 
@@ -116,7 +126,7 @@ namespace ScraperUsingSelenium
             string connectionString = null;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-            string sql = "INSERT INTO StockInfo VALUES (@Id, @Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+            string sql = "INSERT INTO StockInfo VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -125,10 +135,10 @@ namespace ScraperUsingSelenium
                 if (con.State == System.Data.ConnectionState.Open)
                 {
                     Console.WriteLine("Connection open...");
-
+                   // DeleteTableData(con);
+                    
                     using (SqlCommand command = new SqlCommand(sql, con))
                     {
-                        command.Parameters.Add(new SqlParameter("@Id", SqlDbType.Int));
                         command.Parameters.Add(new SqlParameter("@Symbol", SqlDbType.VarChar));
                         command.Parameters.Add(new SqlParameter("@LastPrice", SqlDbType.Float));
                         command.Parameters.Add(new SqlParameter("@Change", SqlDbType.Float));
@@ -136,10 +146,9 @@ namespace ScraperUsingSelenium
                         command.Parameters.Add(new SqlParameter("@MarketTime", SqlDbType.VarChar));
                         command.Parameters.Add(new SqlParameter("@Volume", SqlDbType.VarChar));
                         command.Parameters.Add(new SqlParameter("@AvgVol", SqlDbType.VarChar));
-                        command.Parameters.Add(new SqlParameter("@Shares", SqlDbType.Int));
+                        command.Parameters.Add(new SqlParameter("@Shares", SqlDbType.VarChar));
                         command.Parameters.Add(new SqlParameter("@MarketCap", SqlDbType.VarChar));
 
-                        command.Parameters["@Id"].Value = i + 1;
                         command.Parameters["@Symbol"].Value = stock.Symbol;
                         command.Parameters["@LastPrice"].Value = stock.LastPrice;
                         command.Parameters["@Change"].Value = stock.Change;
@@ -153,10 +162,22 @@ namespace ScraperUsingSelenium
                         command.ExecuteNonQuery();
                         Console.WriteLine("{0} added...", stock.Symbol);
                     }
-
                 }
+                con.Close();
+                Console.WriteLine("Connection closed..");
 
             }
-        }       
+        }
+
+        private static void DeleteTableData(SqlConnection connection)
+        {
+            string deleteTableData = "DELETE FROM StockInfo;";
+
+            using (SqlCommand cmd = new SqlCommand(deleteTableData, connection))
+            {
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("StockInfo Table cleared...");
+            }
+        }
     }
 }
