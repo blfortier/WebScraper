@@ -32,7 +32,7 @@ namespace ScraperUsingSelenium
             this.MarketTime = time;
             this.Volume = vol;
             this.AvgVol = volAvg;
-            this.Shares = Shares;
+            this.Shares = shares;
             this.MarketCap = marketCap;
         }
 

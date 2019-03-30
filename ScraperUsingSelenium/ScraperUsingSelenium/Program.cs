@@ -39,8 +39,8 @@ namespace ScraperUsingSelenium
             IList<IWebElement> stockData = webScraper.FindElements(By.ClassName("simpTblRow"));
             Console.WriteLine("Total stocks: " + stockData.Count);
 
-            for (int j = 0; j < stockData.Count; j++)
-                Console.WriteLine(stockData[j].Text);
+            //for (int j = 0; j < stockData.Count; j++)
+            //    Console.WriteLine(stockData[j].Text);
 
             IList<IWebElement> symbol_elements = webScraper.FindElements(By.XPath("//*[@aria-label='Symbol']"));
             IList<IWebElement> lastPrice_elements = webScraper.FindElements(By.XPath("//*[@aria-label='Last Price']"));
@@ -61,6 +61,7 @@ namespace ScraperUsingSelenium
         private static void ParseScrapedData(ScrapedData extractedData)
         {
             int stockTotal = extractedData.StockSymbols.Count;
+            Console.WriteLine("stocktotal {0}", stockTotal);
 
             string[] symbols = new string[stockTotal];
             double[] lastPrice = new double[stockTotal];
@@ -76,7 +77,7 @@ namespace ScraperUsingSelenium
 
             for (int i = 0; i < stockTotal; i++)
             {
-                symbols[i] = Convert.ToString(extractedData.StockVolumes[i].Text);
+                symbols[i] = Convert.ToString(extractedData.StockSymbols[i].Text);
                 Console.WriteLine("Parsed: {0} + {1}", symbols[i], symbols[i].GetType());
 
                 lastPrice[i] = Convert.ToDouble(extractedData.StockLastPrices[i].Text);
@@ -117,16 +118,16 @@ namespace ScraperUsingSelenium
 
                 Console.WriteLine("stock created");
 
-                InsertStockDataIntoDatabase(stock, i);
+                InsertStockDataIntoDatabase(stock);
             }
         }
 
-        private static void InsertStockDataIntoDatabase(Stock stock, int i)
+        private static void InsertStockDataIntoDatabase(Stock stock)
         {
             string connectionString = null;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-            string sql = "INSERT INTO StockInfo VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap)";
+            string sql = "INSERT INTO StockInfo VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -135,7 +136,7 @@ namespace ScraperUsingSelenium
                 if (con.State == System.Data.ConnectionState.Open)
                 {
                     Console.WriteLine("Connection open...");
-                   // DeleteTableData(con);
+                  //  DeleteTableData(con);
                     
                     using (SqlCommand command = new SqlCommand(sql, con))
                     {
@@ -161,11 +162,16 @@ namespace ScraperUsingSelenium
 
                         command.ExecuteNonQuery();
                         Console.WriteLine("{0} added...", stock.Symbol);
+                        //DeleteTableData(con);
                     }
                 }
-                con.Close();
-                Console.WriteLine("Connection closed..");
-
+                else
+                {
+                    Console.WriteLine("No connection...");
+                }
+                //con.Close();
+                //if (con.State == System.Data.ConnectionState.Closed)
+                //    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
