@@ -20,7 +20,7 @@ namespace ScraperUsingSelenium
 
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolios");
             driver.Navigate().GoToUrl("https://finance.yahoo.com/portfolio/p_0/view/v1");
-            Scrape_DisplayStockData(driver);
+            ScrapeStockData(driver);
 
         }
 
@@ -33,7 +33,7 @@ namespace ScraperUsingSelenium
             webScraper.FindElement(By.Id("login-passwd")).SendKeys("Monkeys123" + Keys.Enter);
         }
 
-        public static void Scrape_DisplayStockData(ChromeDriver webScraper)
+        public static void ScrapeStockData(ChromeDriver webScraper)
         {
             webScraper.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             IList<IWebElement> stockData = webScraper.FindElements(By.ClassName("simpTblRow"));
@@ -132,11 +132,12 @@ namespace ScraperUsingSelenium
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-
+                  ResetAutoIncrementer(con);
+               // DeleteTableData(con);
                 if (con.State == System.Data.ConnectionState.Open)
                 {
                     Console.WriteLine("Connection open...");
-                  //  DeleteTableData(con);
+                    // DeleteTableData(con);
                     
                     using (SqlCommand command = new SqlCommand(sql, con))
                     {
@@ -162,7 +163,7 @@ namespace ScraperUsingSelenium
 
                         command.ExecuteNonQuery();
                         Console.WriteLine("{0} added...", stock.Symbol);
-                        //DeleteTableData(con);
+                       // DeleteTableData(con);
                     }
                 }
                 else
@@ -183,6 +184,17 @@ namespace ScraperUsingSelenium
             {
                 cmd.ExecuteNonQuery();
                 Console.WriteLine("StockInfo Table cleared...");
+            }
+        }
+
+        private static void ResetAutoIncrementer(SqlConnection connection)
+        {
+            string reseed = "DBCC CHECKIDENT ('StockInfo', RESEED, 0);";
+
+            using (SqlCommand cmd = new SqlCommand(reseed, connection))
+            {
+                cmd.ExecuteNonQuery();
+                Console.WriteLine("Auto incrementer reset...");
             }
         }
     }
