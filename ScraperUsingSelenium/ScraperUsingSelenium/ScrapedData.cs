@@ -18,8 +18,6 @@ namespace ScraperUsingSelenium
         public IList<IWebElement> StockShares { get; set; }
         public IList<IWebElement> StockMarketCaps { get; set; }
 
-
-
         public ScrapedData(IList<IWebElement> symbols, IList<IWebElement> lastPrices,
                     IList<IWebElement> changes, IList<IWebElement> changePercents,
                     IList<IWebElement> marketTimes, IList<IWebElement> volumes,
