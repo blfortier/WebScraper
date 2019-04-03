@@ -19,6 +19,22 @@ namespace ScraperUsingSelenium
             LogIn(driver);
             NavigateToYahooFinance(driver);
             ScrapeStockData(driver);
+
+            //List<Stock> testData = new List<Stock>
+            //{
+            //    new Stock{Symbol="Z", LastPrice=35.29, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="AAPL", LastPrice=190.13, Change=0.18, ChangePercent=0.09, MarketTime="11:54AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="MSFT", LastPrice=118.73, Change=0.79, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="CVS", LastPrice=53.85, Change=-0.08, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="1.774M", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="BJ", LastPrice=27.8, Change=0.4, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="HD", LastPrice=193.39, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="BBBY", LastPrice=16.73, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="AMZN", LastPrice=1804.92, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="ATVI", LastPrice=46.42, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //    new Stock{Symbol="EA", LastPrice=102.95, Change=0.55, ChangePercent=1.58, MarketTime="11:53AM EDT", Volume="417.784k", AvgVol="3.021M", Shares="-", MarketCap="7.188B"},
+            //};
+
+            //Console.WriteLine(testData.Count);
         }
 
         private static void NavigateToYahooFinance(ChromeDriver driver)
@@ -78,47 +94,34 @@ namespace ScraperUsingSelenium
 
             Stock stock = new Stock();
 
-            /*
-             Z	35.29	0.55	1.58	11:53AM EDT	417.784k	3.021M	-	7.188B
-            AAPL	190.13	0.18	0.09	11:54AM EDT	13.274M	31.993M	-	896.846B
-            MSFT	118.73	0.79	0.67	11:54AM EDT	7.101M	29.056M	-	911.228B
-            CVS	53.85	-0.08	-0.16	11:54AM EDT	3.711M	13.427M	-	69.802B
-            BJ	27.8	0.4	1.44	11:54AM EDT	574.208k	1.774M	-	3.832B
-            HD	193.39	1.5	0.78	11:54AM EDT	2.063M	4.657M	-	213.384B
-            BBBY	16.73	-0.26	-1.56	11:54AM EDT	3.148M	7.837M	-	2.297B
-            AMZN	1804.92	24.17	1.36	11:54AM EDT	2.068M	5.177M	-	886.722B
-            ATVI	46.42	0.89	1.95	11:54AM EDT	2.923M	13.326M	-	35.45B
-            EA	102.95	1.32	1.3	11:54AM EDT	1.154M	7.748M	-	30.851B                      
-             */
-
             for (int i = 0; i < stockTotal; i++)
             {
-                symbols[i] = Convert.ToString(extractedData.StockSymbols[i].Text);
+                symbols.Insert(i, Convert.ToString(extractedData.StockSymbols[i].Text));
               //  Console.WriteLine("Parsed: {0} + {1}", symbols[i], symbols[i].GetType());
 
-                lastPrice[i] = Convert.ToDouble(extractedData.StockLastPrices[i].Text);
+                lastPrice.Insert(i, Convert.ToDouble(extractedData.StockLastPrices[i].Text));
              //   Console.WriteLine("Parsed: {0} + {1}", lastPrice[i], lastPrice[i].GetType());
 
-                change[i] = Convert.ToDouble(extractedData.StockChanges[i].Text);
+                change.Insert(i, Convert.ToDouble(extractedData.StockChanges[i].Text));
              //   Console.WriteLine("Parsed: {0} + {1}", change[i], change[i].GetType());
 
                 char trim = '%';
-                changePercent[i] = Convert.ToDouble(extractedData.StockChangePercents[i].Text.TrimEnd(trim));
+                changePercent.Insert(i, Convert.ToDouble(extractedData.StockChangePercents[i].Text.TrimEnd(trim)));
              //   Console.WriteLine("Parsed: {0}% + {1}", changePercent[i], changePercent[i].GetType());
 
-                marketTime[i] = Convert.ToString(extractedData.StockMarketTimes[i].Text);
+                marketTime.Insert(i, Convert.ToString(extractedData.StockMarketTimes[i].Text));
              //   Console.WriteLine("Parsed: {0} + {1}", marketTime[i], marketTime[i].GetType());
 
-                volume[i] = Convert.ToString(extractedData.StockVolumes[i].Text);
+                volume.Insert(i, Convert.ToString(extractedData.StockVolumes[i].Text));
              //   Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
 
-                avgVolume[i] = Convert.ToString(extractedData.StockAvgVolumes[i].Text);
+                avgVolume.Insert(i, Convert.ToString(extractedData.StockAvgVolumes[i].Text));
              //   Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
 
-                shares[i] = Convert.ToString(extractedData.StockShares[i].Text);
+                shares.Insert(i, Convert.ToString(extractedData.StockShares[i].Text));
             //    Console.WriteLine("Parsed: {0} + {1}", shares[i], shares[i].GetType());
 
-                marketCap[i] = Convert.ToString(extractedData.StockMarketCaps[i].Text);
+                marketCap.Insert(i, Convert.ToString(extractedData.StockMarketCaps[i].Text));
             //    Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
 
 
@@ -134,7 +137,7 @@ namespace ScraperUsingSelenium
 
                 Console.WriteLine("{0} stock created", symbols[i]);
 
-                InsertStockDataIntoDatabase(stock);
+               InsertStockDataIntoDatabase(stock);
             }
         }
 
@@ -143,19 +146,28 @@ namespace ScraperUsingSelenium
             string connectionString = null;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-            //for(int i = 0; i < 2; i++)
-            //{
-            //    DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);
-            //}            
 
-         //   InsertIntoLatestSrape(stock, connectionString);
+          //  DeleteTableData(connectionString);
+          //  ResetAutoIncrementer(connectionString);        
+
+            InsertIntoLatestSrape(stock, connectionString);
             InsertIntoSrapeHistory(stock, connectionString);
-        }
+    }
 
         private static void InsertIntoLatestSrape(Stock stock, string connectionString)
         {
-            string latestScrape = "INSERT INTO LatestScrape VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
+            // ON DUPLICATE KEY UPDATE age = @age, job = @job
+
+
+            string latestScrape = @"IF EXISTS(SELECT* FROM LatestScrape WHERE Symbol = @Symbol)
+                                        UPDATE LatestScrape
+                                        SET LastPrice = @LastPrice, Change = @Change, ChangePercent = @ChangePercent,
+                                            MarketTime = @MarketTime, Volume = @Volume,
+                                            AvgVol = @AvgVol, Shares = @Shares, MarketCap = @MarketCap 
+                                        WHERE Symbol = @Symbol 
+                                    ELSE
+                                        INSERT INTO LatestScrape VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
+
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -253,7 +265,7 @@ namespace ScraperUsingSelenium
 
         private static void DeleteTableData(string connection)
         {
-            string deleteTableData = "DELETE FROM LatestScrape;";
+            string deleteTableData = "DELETE FROM ScrapeHistory;";
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
@@ -272,7 +284,7 @@ namespace ScraperUsingSelenium
 
         private static void ResetAutoIncrementer(string connection)
         {
-            string reseed = "DBCC CHECKIDENT ('LatestScrape', RESEED, 0);";
+            string reseed = "DBCC CHECKIDENT ('ScrapeHistory', RESEED, 0);";
 
             using (SqlConnection con = new SqlConnection(connection))
             {
