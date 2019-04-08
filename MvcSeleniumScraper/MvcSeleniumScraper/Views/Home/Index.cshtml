@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Yahoo Finance Scraper</h1>
+    <p class="lead">View  your current stock data and the history of your stocks</p>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Current Stock Status</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut in quam quam.
+            Aliquam eget aliquet mi. Mauris ut ultricies eros. Duis efficitur ante nunc,
+            a dignissim felis suscipit maximus. Cras aliquam nibh lectus, a mattis justo 
+            auctor in. Ut vitae bibendum sapien, vel suscipit mauris.
+        </p>
+        <p>@Html.ActionLink("Your Stocks", "Index", "Stocks")</p>
+    </div>
+    <div class="col-md-6">
+        <h2>Stock History</h2>
+        <p>
+            Maecenas nec dictum leo. Duis sem ex, laoreet id quam a, laoreet fermentum nisl.
+            Morbi ac ligula vitae neque feugiat blandit in quis erat. Pellentesque habitant
+            morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+            Nam convallis elit vitae nisl ullamcorper, eget molestie nisl volutpat.
+        </p>
+        <p>@Html.ActionLink("Stock History", "Index", "StockHistory")</p>
+
+    </div>
+    @*<div class="col-md-4">
+        <h2></h2>
+        <p></p>
+    </div>*@
+</div>

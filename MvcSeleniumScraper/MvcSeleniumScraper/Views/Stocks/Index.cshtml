@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MvcSeleniumScraper.Models.Stock>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LastPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Change)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChangePercent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarketTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Volume)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvgVol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Shares)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarketCap)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Change)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChangePercent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarketTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Volume)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvgVol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Shares)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MarketCap)
+        </td>
+        <td>
+        @*    @Html.ActionLink("Edit", "Edit", new { id=item.Symbol }) | *@
+            @Html.ActionLink("Details", "Details", new { id=item.Symbol }) 
+        @*    @Html.ActionLink("Delete", "Delete", new { id=item.Symbol }) *@
+        </td>
+    </tr>
+}
+
+</table>

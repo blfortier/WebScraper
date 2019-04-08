@@ -147,8 +147,8 @@ namespace ScraperUsingSelenium
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
 
-          //  DeleteTableData(connectionString);
-          //  ResetAutoIncrementer(connectionString);        
+           // DeleteTableData(connectionString);
+        //    ResetAutoIncrementer(connectionString);        
 
             InsertIntoLatestSrape(stock, connectionString);
             InsertIntoSrapeHistory(stock, connectionString);
@@ -159,14 +159,14 @@ namespace ScraperUsingSelenium
             // ON DUPLICATE KEY UPDATE age = @age, job = @job
 
 
-            string latestScrape = @"IF EXISTS(SELECT* FROM LatestScrape WHERE Symbol = @Symbol)
-                                        UPDATE LatestScrape
+            string latestScrape = @"IF EXISTS(SELECT* FROM Stocks WHERE Symbol = @Symbol)
+                                        UPDATE Stocks
                                         SET LastPrice = @LastPrice, Change = @Change, ChangePercent = @ChangePercent,
                                             MarketTime = @MarketTime, Volume = @Volume,
                                             AvgVol = @AvgVol, Shares = @Shares, MarketCap = @MarketCap 
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO LatestScrape VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
+                                        INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
 
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -200,7 +200,7 @@ namespace ScraperUsingSelenium
                         command.Parameters["@MarketCap"].Value = stock.MarketCap;
 
                         command.ExecuteNonQuery();
-                        Console.WriteLine("{0} added to LatestScrape table...", stock.Symbol);
+                        Console.WriteLine("{0} added to Stocks table...", stock.Symbol);
                         // DeleteTableData(con);
                         //DeleteTableData(con);
                     }
@@ -217,7 +217,7 @@ namespace ScraperUsingSelenium
 
         private static void InsertIntoSrapeHistory(Stock stock, string connectionString)
         {
-            string scrapeHistory = "INSERT INTO ScrapeHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
+            string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @Shares, @MarketCap);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -225,8 +225,6 @@ namespace ScraperUsingSelenium
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
-                  //  Console.WriteLine("Connection open...");
-
                     using (SqlCommand command = new SqlCommand(scrapeHistory, con))
                     {
                         command.Parameters.Add(new SqlParameter("@Symbol", SqlDbType.VarChar));
@@ -250,7 +248,7 @@ namespace ScraperUsingSelenium
                         command.Parameters["@MarketCap"].Value = stock.MarketCap;
 
                         command.ExecuteNonQuery();
-                        Console.WriteLine("{0} added to ScrapeHistory table...", stock.Symbol);
+                        Console.WriteLine("{0} added to StockHistory table...", stock.Symbol);
                     }
                 }
                 else
@@ -265,7 +263,7 @@ namespace ScraperUsingSelenium
 
         private static void DeleteTableData(string connection)
         {
-            string deleteTableData = "DELETE FROM ScrapeHistory;";
+            string deleteTableData = "DELETE FROM Stocks;";
             using (SqlConnection con = new SqlConnection(connection))
             {
                 con.Open();
@@ -284,7 +282,7 @@ namespace ScraperUsingSelenium
 
         private static void ResetAutoIncrementer(string connection)
         {
-            string reseed = "DBCC CHECKIDENT ('ScrapeHistory', RESEED, 0);";
+            string reseed = "DBCC CHECKIDENT ('StockHistory', RESEED, 0);";
 
             using (SqlConnection con = new SqlConnection(connection))
             {
