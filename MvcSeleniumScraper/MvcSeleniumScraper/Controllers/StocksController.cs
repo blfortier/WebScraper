@@ -7,17 +7,35 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcSeleniumScraper.Models;
+using MvcSeleniumScraper.ScraperService;
 
 namespace MvcSeleniumScraper.Controllers
 {
+    [OverrideAuthorization]
+    [Authorize]
     public class StocksController : Controller
     {
         private StockDataEntities db = new StockDataEntities();
 
         // GET: Stocks
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Stocks.ToList());
+        }
+
+        [Authorize]
+        public ActionResult NewScrape()
+        {
+            if (ModelState.IsValid)
+            {
+                var scrape = new Scrape("webdriverproj", "Monkeys123");
+
+                scrape.LogIn();
+                scrape.NavigateToYahooFinance();
+                scrape.ScrapeStockData();
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: Stocks/Details/5
@@ -27,92 +45,12 @@ namespace MvcSeleniumScraper.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Stock stock = db.Stocks.Find(id);
+            Models.Stock stock = db.Stocks.Find(id);
             if (stock == null)
             {
                 return HttpNotFound();
             }
             return View(stock);
-        }
-
-        // GET: Stocks/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        //// POST: Stocks/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Symbol,LastPrice,Change,ChangePercent,MarketTime,Volume,AvgVol,Shares,MarketCap")] Stock stock)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Stocks.Add(stock);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(stock);
-        //}
-
-        //// GET: Stocks/Edit/5
-        //public ActionResult Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Stock stock = db.Stocks.Find(id);
-        //    if (stock == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(stock);
-        //}
-
-        //// POST: Stocks/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Symbol,LastPrice,Change,ChangePercent,MarketTime,Volume,AvgVol,Shares,MarketCap")] Stock stock)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(stock).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(stock);
-        //}
-
-        // GET: Stocks/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Stock stock = db.Stocks.Find(id);
-            if (stock == null)
-            {
-                return HttpNotFound();
-            }
-            return View(stock);
-        }
-
-        // POST: Stocks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            Stock stock = db.Stocks.Find(id);
-            db.Stocks.Remove(stock);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
