@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -13,64 +14,53 @@ namespace ScraperUsingHAP
         static void Main(string[] args)
         {
             List<Stock> stockInfo = new List<Stock>();
+            Stock stock;
 
-            string edwardJonesUrl = "https://www.edwardjones.com/your-watch-list/";
+            string nasdaqWebsite = "https://www.nasdaq.com/markets/most-active.aspx";
 
             HtmlWeb web = new HtmlWeb();
-            var doc = web.Load(edwardJonesUrl);
+            var doc = web.Load(nasdaqWebsite);
 
-            var tableNode = doc.DocumentNode.SelectNodes("//table[contains(@id, 'watchListDetailTableBody')]//tr");
-            //-->  //tbody[contains(@id, 'watchListDetailTableBody')]//tr
+            var tableNode = doc.DocumentNode.SelectNodes("//*[@id='_active']/table/tr");
 
             if (tableNode != null)
             {
                 Console.WriteLine("table found");
                 Console.WriteLine("tableNode count: {0}", tableNode.Count);
-                Console.WriteLine(tableNode.Descendants().Count());
 
-               int rowCount = 1;
-                foreach (var row in tableNode)
+                foreach (var item in tableNode)
                 {
-                    Console.WriteLine("row name: {0}", row.Name);                    
-                    
-                    var nameAndSymbolCell = row.SelectSingleNode("th/a");
-                    var otherDataCells = row.SelectNodes("td");
-                    
-                    if (nameAndSymbolCell == null)
-                        Console.WriteLine("nameAndSymbolCell null");                    
-                        
-                    if (otherDataCells == null)
-                        Console.WriteLine("otherDataCells null");
+                   // Console.WriteLine(item.Name);
 
-                    if (otherDataCells != null && nameAndSymbolCell != null)
-                    {
-                        string name = nameAndSymbolCell.InnerText;
-                        string symbol = nameAndSymbolCell.GetAttributeValue("symbol", null);
+                    var symbol = item.SelectSingleNode("td/h3/a").InnerText;
+                    Console.WriteLine("symbol: {0}", symbol);
 
-                        string lastPrice = otherDataCells[2].InnerText;
+                    var name = item.SelectSingleNode("td[2]/b/a").InnerText;
+                    Console.WriteLine("name: {0}", name);
 
-                        string change = otherDataCells[3].InnerText;
+                    var lastPrice = item.SelectSingleNode("td[4]").InnerText;
+                    Console.WriteLine("last price: {0}", lastPrice);
 
-                        Console.WriteLine("name {0}", name);
-                        Console.WriteLine("symbol {0}", symbol);
-                        Console.WriteLine("price: {0}", lastPrice);
-                        Console.WriteLine("change: {0}", change);
+                    var changeNode = item.SelectSingleNode("td[5]/span");
+                    string change = changeNode.InnerText;
+                    Console.WriteLine("change reg: {0}", change);
+                    Match match = Regex.Match(change, @"([^;]+$)");
+                    string changeString = match.Groups[1].Value;
 
-                        Stock stock = new Stock(name, symbol, lastPrice, change);
-                        stockInfo.Add(stock);
-
-                        rowCount++;
-                        foreach (var stockItem in stockInfo)
-                        {
-                            Console.WriteLine(stockItem.Name);
-                        }
-                    }  
+                    if (changeNode.Attributes["class"].Value == "green")
+                        changeString = "+" + changeString;
                     else
-                        Console.WriteLine("Into foreach loop. name and otherData cells null");
+                        changeString = "-" + changeString;
+
+                    Console.WriteLine("change percent: {0}", changeString);
+
+                    stock = new Stock(name, symbol, lastPrice, changeString);
+                    stockInfo.Add(stock);
+                    Console.WriteLine("Stock object created for {0}", stock.Name);
+
                 }
+
             }
-            else
-                Console.WriteLine("Table not found");
         }
 
     }
