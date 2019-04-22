@@ -15,7 +15,6 @@ namespace ScraperUsingHAP
 
         public Stock()
         {
-
         }
 
         public Stock(string name, string symbol, string lastPrice, string change)

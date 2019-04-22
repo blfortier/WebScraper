@@ -12,55 +12,65 @@ namespace ScraperUsingHAP
     { 
         static void Main(string[] args)
         {
-            var stockInfo = new List<Stock>();
+            List<Stock> stockInfo = new List<Stock>();
 
-            string googleFinance = "https://www.google.com/finance#wptab=s:H4sIAAAAAAAAAOPQeMSozC3w8sc9YSmpSWtOXmMU4RJyy8xLzEtO9UnMS8nMSw9ITE_l2cXEHekfGhQfHOLv7B28iJU9DaIGAAUYQO1AAAAA";
+            string edwardJonesUrl = "https://www.edwardjones.com/your-watch-list/";
 
             HtmlWeb web = new HtmlWeb();
-            var doc = web.Load(googleFinance);
+            var doc = web.Load(edwardJonesUrl);
 
+            var tableNode = doc.DocumentNode.SelectNodes("//table[contains(@id, 'watchListDetailTableBody')]//tr");
+            //-->  //tbody[contains(@id, 'watchListDetailTableBody')]//tr
 
-            var root = doc.DocumentNode.SelectNodes("//*[@id='knowledge-finance-wholepage__financial-entities-list']/div");
-            //SelectNodes("//div[contains(@class,'ML43JB')]").ToList();
-
-            //foreach (var item in nameNode.Where(n => n.HasClass("TLh8uf")))
-            //{
-            //    Console.WriteLine(item);
-            //}
-            //[@class='TLh8uf']");
-
-            Console.WriteLine(root);
-
-
-            if (root != null)
+            if (tableNode != null)
             {
-                Console.WriteLine("yeah");
-                Console.WriteLine(root);
-                foreach (var item in root.Descendants())
+                Console.WriteLine("table found");
+                Console.WriteLine("tableNode count: {0}", tableNode.Count);
+                Console.WriteLine(tableNode.Descendants().Count());
+
+               int rowCount = 1;
+                foreach (var row in tableNode)
                 {
-                    // Console.WriteLine(item.InnerText);
-                    // Console.WriteLine("in foreach loop");
-                    //var name = doc.DocumentNode.SelectSingleNode("/div[1]/g-link/a/div/span[1]").InnerText;
-                    Console.WriteLine(item);
+                    Console.WriteLine("row name: {0}", row.Name);                    
+                    
+                    var nameAndSymbolCell = row.SelectSingleNode("th/a");
+                    var otherDataCells = row.SelectNodes("td");
+                    
+                    if (nameAndSymbolCell == null)
+                        Console.WriteLine("nameAndSymbolCell null");                    
+                        
+                    if (otherDataCells == null)
+                        Console.WriteLine("otherDataCells null");
+
+                    if (otherDataCells != null && nameAndSymbolCell != null)
+                    {
+                        string name = nameAndSymbolCell.InnerText;
+                        string symbol = nameAndSymbolCell.GetAttributeValue("symbol", null);
+
+                        string lastPrice = otherDataCells[2].InnerText;
+
+                        string change = otherDataCells[3].InnerText;
+
+                        Console.WriteLine("name {0}", name);
+                        Console.WriteLine("symbol {0}", symbol);
+                        Console.WriteLine("price: {0}", lastPrice);
+                        Console.WriteLine("change: {0}", change);
+
+                        Stock stock = new Stock(name, symbol, lastPrice, change);
+                        stockInfo.Add(stock);
+
+                        rowCount++;
+                        foreach (var stockItem in stockInfo)
+                        {
+                            Console.WriteLine(stockItem.Name);
+                        }
+                    }  
+                    else
+                        Console.WriteLine("Into foreach loop. name and otherData cells null");
                 }
             }
             else
-                Console.WriteLine("No");
-
-
-            // //*[@id='knowledge-finance-wholepage__financial-entities-list']/div
-
-            // "//*[contains(@class,'z4Fov')]")
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]/div[1]/g-link/a/div
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]
-            // #knowledge-finance-wholepage__financial-entities-list
-            // <span class="z4Fov">S&amp;P 500 Index</span>
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]/div[1]/g-link/a/div/span[1]
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]/div[1]/g-link/a/div/span[1]
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]/div[1]/g-link/a/div/span[1]
-            // //*[@id="knowledge-finance-wholepage__financial-entities-list"]
-
+                Console.WriteLine("Table not found");
         }
 
     }
