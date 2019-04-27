@@ -42,10 +42,11 @@ namespace ScraperUsingRestSharp
                     var change = stock.data[stockInResponse].day_change.ToString();
                     var changePct = stock.data[stockInResponse].change_pct.ToString();
 
-                    //Console.WriteLine("stuff: {0} {1} {2} {3} ", symbol, name, price, changePct);
+                    Console.WriteLine("stuff: {0} {1} {2} {3} {4}", symbol, name, price, change, changePct);
 
                     var convertToApiCallResponseObject = new ApiCallResponse(symbol, name, price, change, changePct);
                     stockList.Add(convertToApiCallResponseObject);
+                    Database.InsertStockDataIntoDatabase(stock);
                 }
             }
             catch (Exception e)

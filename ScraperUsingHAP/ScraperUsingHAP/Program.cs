@@ -46,8 +46,8 @@ namespace ScraperUsingHAP
                     stock = new Stock(name, symbol, lastPrice, changeString);
                     stockInfo.Add(stock);
                     Console.WriteLine("Stock object created for {0}", stock.Name);
-                  //  Database.InsertStockDataIntoDatabase(stock);
-                  //  Console.WriteLine("Stock inserted into database...");
+                    Database.InsertStockDataIntoDatabase(stock);
+                    Console.WriteLine("Stock inserted into database...");
 
                 }          
 

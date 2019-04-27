@@ -27,11 +27,11 @@ namespace ScraperUsingHAP
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM NasdaqStockCurrent WHERE Symbol = @Symbol)
-                                        UPDATE Stocks
-                                        SET Name = @Name, LastPrice = @LastPrice, Change = @Change
+                                        UPDATE NasdaqStockCurrent
+                                        SET Name = @Name, Price = @Price, Change = @Change
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO NasdaqStockCurrent VALUES(@Name, @Symbol, @LastPrice, @Change);";
+                                        INSERT INTO NasdaqStockCurrent VALUES(@Name, @Symbol, @Price, @Change);";
 
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -48,7 +48,7 @@ namespace ScraperUsingHAP
                         {
                             command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                             command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
-                            command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
+                            command.Parameters.Add(new SqlParameter("@Price", stock.LastPrice));
                             command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                             command.ExecuteNonQuery();
@@ -75,7 +75,7 @@ namespace ScraperUsingHAP
 
         private static void InsertIntoSrapeHistory(Stock stock, string connectionString)
         {
-            string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @LastPrice, @Change);";
+            string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @Price, @Change);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -87,7 +87,7 @@ namespace ScraperUsingHAP
                     {
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
-                        command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
+                        command.Parameters.Add(new SqlParameter("@Price", stock.LastPrice));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                         command.ExecuteNonQuery();
