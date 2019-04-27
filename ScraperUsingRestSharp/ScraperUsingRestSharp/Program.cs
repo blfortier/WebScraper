@@ -23,9 +23,9 @@ namespace ScraperUsingRestSharp
             const string api_key = "Jq0GZBASNat6TMVl2pZ5gzTSi2pSKLR8fYZYZK2kZblOdp7W3BBhsMDCinFQ";
 
             string apiUrl = "https://www.worldtradingdata.com/api/v1/stock";
-
-            try
-            {
+            // Encoding.Default.GetBytes(name)
+            //try
+            //{
                 var client = new RestClient(apiUrl);
                 var request = new RestRequest("?symbol={symbol}&api_token={api_token}", Method.GET);
                 request.AddParameter("symbol", joined);
@@ -42,18 +42,18 @@ namespace ScraperUsingRestSharp
                     var change = stock.data[stockInResponse].day_change.ToString();
                     var changePct = stock.data[stockInResponse].change_pct.ToString();
 
-                    Console.WriteLine("stuff: {0} {1} {2} {3} {4}", symbol, name, price, change, changePct);
+               //     Console.WriteLine("stuff: {0} {1} {2} {3} {4}", symbol, name, price, change, changePct);
 
                     var convertToApiCallResponseObject = new ApiCallResponse(symbol, name, price, change, changePct);
                     stockList.Add(convertToApiCallResponseObject);
-                    Database.InsertStockDataIntoDatabase(stock);
+                    Database.InsertStockDataIntoDatabase(convertToApiCallResponseObject);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error making GET call...");
-                throw e;
-            }
+        //    }
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine("Error making GET call...");
+            //    throw e;
+            //}
 
             foreach (var item in stockList)
             {

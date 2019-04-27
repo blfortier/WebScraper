@@ -53,8 +53,6 @@ namespace ScraperUsingHAP
 
                             command.ExecuteNonQuery();
                             Console.WriteLine("{0} added to NasdaqStockCurrent table...", stock.Name);
-                            // DeleteTableData(con);
-                            //DeleteTableData(con);
                         }
                     }
                     catch (Exception error)
@@ -67,9 +65,9 @@ namespace ScraperUsingHAP
                 {
                     Console.WriteLine("No connection...");
                 }
-                //con.Close();
-                //if (con.State == System.Data.ConnectionState.Closed)
-                //    Console.WriteLine("Connection sucessfully closed...");
+                con.Close();
+                if (con.State == System.Data.ConnectionState.Closed)
+                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
@@ -98,9 +96,9 @@ namespace ScraperUsingHAP
                 {
                     Console.WriteLine("No connection...");
                 }
-                //con.Close();
-                //if (con.State == System.Data.ConnectionState.Closed)
-                //    Console.WriteLine("Connection sucessfully closed...");
+                con.Close();
+                if (con.State == System.Data.ConnectionState.Closed)
+                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
     }

@@ -27,10 +27,10 @@ namespace ScraperUsingRestSharp
 
             string latestScrape = @"IF EXISTS(SELECT* FROM WorldTradeStockCurrent WHERE Symbol = @Symbol)
                                         UPDATE WorldTradeStockCurrent
-                                        SET Name = @Name, LastPrice = @Price, Change = @Change, ChangePercent = @ChangePercent
+                                        SET Name = @Name, Price = @Price, Change = @Change, ChangePercent = @ChangePercent
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO WorldTradeStockCurrent VALUES(@Symbol, @Name, @Price, @Change, @ChangePercent);";
+                                        INSERT INTO WorldTradeStockCurrent VALUES(@Name, @Symbol, @Price, @Change, @ChangePercent);";
 
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -43,7 +43,13 @@ namespace ScraperUsingRestSharp
 
                     using (SqlCommand command = new SqlCommand(latestScrape, con))
                     {
+                        if (stock.Symbol == null)
+                            Console.WriteLine("wth");
+                        else
+                            Console.WriteLine("idk");
+
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
+                        Console.WriteLine(stock.Name.Length);
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                         command.Parameters.Add(new SqlParameter("@Price", stock.Price));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
@@ -66,7 +72,7 @@ namespace ScraperUsingRestSharp
 
         private static void InsertIntoSrapeHistory(dynamic stock, string connectionString)
         {
-            string scrapeHistory = "INSERT INTO WorldTradeStockHistory VALUES (@Symbol, @Name, @Price, @Change, @ChangePercent);";
+            string scrapeHistory = "INSERT INTO WorldTradeStockHistory VALUES (@Name, @Symbol, @Price, @Change, @ChangePercent);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -76,9 +82,9 @@ namespace ScraperUsingRestSharp
                 {
                     using (SqlCommand command = new SqlCommand(scrapeHistory, con))
                     {
-                        command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
-                        command.Parameters.Add(new SqlParameter("@LastPrice", stock.Price));
+                        command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
+                        command.Parameters.Add(new SqlParameter("@Price", stock.Price));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
                         command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                        

@@ -27,11 +27,11 @@ namespace ScraperUsingRestSharp
 
         public void DisplayStockInfo()
         {
-            Console.WriteLine("Name: {0}", this.Name);
-            Console.WriteLine("Symbol: {0}", this.Symbol);
-            Console.WriteLine("Price: {0}", this.Price);
-            Console.WriteLine("Change: {0}", this.Change);
-            Console.WriteLine("Change Percent: {0}", this.ChangePercent);
+            Console.WriteLine("Name: {0}", this.Name.Length);
+            Console.WriteLine("Symbol: {0}", this.Symbol.Length);
+            Console.WriteLine("Price: {0}", this.Price.Length);
+            Console.WriteLine("Change: {0}", this.Change.Length);
+            Console.WriteLine("Change Percent: {0}", this.ChangePercent.Length);
             Console.WriteLine();
         }
 
