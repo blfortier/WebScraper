@@ -53,11 +53,10 @@ namespace ScraperUsingSelenium
             IList<IWebElement> marketTime_elements = driver.FindElements(By.XPath("//*[@aria-label='Market Time']"));
             IList<IWebElement> volume_elements = driver.FindElements(By.XPath("//*[@aria-label='Volume']"));
             IList<IWebElement> avgVolume_elements = driver.FindElements(By.XPath("//*[@aria-label='Avg Vol (3m)']"));
-            IList<IWebElement> shares_elements = driver.FindElements(By.XPath("//*[@aria-label='Shares']"));
             IList<IWebElement> marketCap_elements = driver.FindElements(By.XPath("//*[@aria-label='Market Cap']"));
 
             ScrapedData scrape = new ScrapedData(symbol_elements, lastPrice_elements, change_elements, changePercent_elements,
-                                        marketTime_elements, volume_elements, avgVolume_elements, shares_elements, marketCap_elements);
+                                        marketTime_elements, volume_elements, avgVolume_elements, marketCap_elements);
 
             ParseScrapedData(scrape);
         }
@@ -103,9 +102,6 @@ namespace ScraperUsingSelenium
                 avgVolume.Insert(i, Convert.ToString(extractedData.StockAvgVolumes[i].Text));
                 //   Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
 
-                shares.Insert(i, Convert.ToString(extractedData.StockShares[i].Text));
-                //    Console.WriteLine("Parsed: {0} + {1}", shares[i], shares[i].GetType());
-
                 marketCap.Insert(i, Convert.ToString(extractedData.StockMarketCaps[i].Text));
                 //    Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
 
@@ -117,7 +113,6 @@ namespace ScraperUsingSelenium
                                   marketTime[i],
                                   volume[i],
                                   avgVolume[i],
-                                  shares[i],
                                   marketCap[i]);
 
                 Console.WriteLine("{0} stock created", symbols[i]);

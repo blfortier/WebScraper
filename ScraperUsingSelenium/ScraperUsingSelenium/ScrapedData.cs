@@ -15,13 +15,12 @@ namespace ScraperUsingSelenium
         public IList<IWebElement> StockMarketTimes { get; set; }
         public IList<IWebElement> StockVolumes { get; set; }
         public IList<IWebElement> StockAvgVolumes { get; set; }
-        public IList<IWebElement> StockShares { get; set; }
         public IList<IWebElement> StockMarketCaps { get; set; }
 
         public ScrapedData(IList<IWebElement> symbols, IList<IWebElement> lastPrices,
                     IList<IWebElement> changes, IList<IWebElement> changePercents,
                     IList<IWebElement> marketTimes, IList<IWebElement> volumes,
-                    IList<IWebElement> avgVolumes, IList<IWebElement> shares, IList<IWebElement> marketCaps)
+                    IList<IWebElement> avgVolumes, IList<IWebElement> marketCaps)
         {
             this.StockSymbols = symbols;
             this.StockLastPrices = lastPrices;
@@ -30,11 +29,7 @@ namespace ScraperUsingSelenium
             this.StockMarketTimes = marketTimes;
             this.StockVolumes = volumes;
             this.StockAvgVolumes = avgVolumes;
-            this.StockShares = shares;
             this.StockMarketCaps = marketCaps;
-
         }
-
-
     }
 }

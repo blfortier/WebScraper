@@ -14,16 +14,15 @@ namespace ScraperUsingSelenium
         public string MarketTime { get; set; }
         public string Volume { get; set; }
         public string AvgVol { get; set; }
-        public string Shares { get; set; }
         public string MarketCap { get; set; }
 
         public Stock()
         {
-
         }
+
         public Stock(string symbol, double lastPrice,
                     double change, double changePercent, string time, 
-                    string vol, string volAvg, string shares, string marketCap)
+                    string vol, string volAvg, string marketCap)
         {
             this.Symbol = symbol;
             this.LastPrice = lastPrice;
@@ -32,9 +31,7 @@ namespace ScraperUsingSelenium
             this.MarketTime = time;
             this.Volume = vol;
             this.AvgVol = volAvg;
-            this.Shares = shares;
             this.MarketCap = marketCap;
         }
-
     }
 }
