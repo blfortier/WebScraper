@@ -189,6 +189,8 @@
     <Compile Include="Controllers\PickStockController.cs" />
     <Compile Include="Controllers\StockHistoriesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
+    <Compile Include="Controllers\WorldTradeStockCurrentsController.cs" />
+    <Compile Include="Controllers\WorldTradeStockHistoriesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -237,6 +239,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StockInfo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\WorldTradeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorldTradeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorldTradeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorldTradeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorldTradeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorldTradeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorldTradeStockCurrent.cs">
+      <DependentUpon>WorldTradeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorldTradeStockHistory.cs">
+      <DependentUpon>WorldTradeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScraperService\Database.cs" />
     <Compile Include="ScraperService\Scrape.cs" />
@@ -273,6 +296,16 @@
       <DependentUpon>StockInfo.edmx</DependentUpon>
       <LastGenOutput>StockInfo.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\WorldTradeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WorldTradeModel.edmx</DependentUpon>
+      <LastGenOutput>WorldTradeModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\WorldTradeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>WorldTradeModel.edmx</DependentUpon>
+      <LastGenOutput>WorldTradeModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\NasdaqModel.edmx">
@@ -288,6 +321,13 @@
     </EntityDeploy>
     <Content Include="Models\StockInfo.edmx.diagram">
       <DependentUpon>StockInfo.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\WorldTradeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WorldTradeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\WorldTradeModel.edmx.diagram">
+      <DependentUpon>WorldTradeModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -342,6 +382,16 @@
     <Content Include="Views\NasdaqStockCurrents\Details.cshtml" />
     <Content Include="Views\NasdaqStockCurrents\Index.cshtml" />
     <Content Include="Views\PickStock\Index.cshtml" />
+    <Content Include="Views\WorldTradeStockHistories\Create.cshtml" />
+    <Content Include="Views\WorldTradeStockHistories\Delete.cshtml" />
+    <Content Include="Views\WorldTradeStockHistories\Details.cshtml" />
+    <Content Include="Views\WorldTradeStockHistories\Edit.cshtml" />
+    <Content Include="Views\WorldTradeStockHistories\Index.cshtml" />
+    <Content Include="Views\WorldTradeStockCurrents\Create.cshtml" />
+    <Content Include="Views\WorldTradeStockCurrents\Delete.cshtml" />
+    <Content Include="Views\WorldTradeStockCurrents\Details.cshtml" />
+    <Content Include="Views\WorldTradeStockCurrents\Edit.cshtml" />
+    <Content Include="Views\WorldTradeStockCurrents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
