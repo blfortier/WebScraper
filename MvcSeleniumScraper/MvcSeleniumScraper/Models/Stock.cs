@@ -18,10 +18,8 @@ namespace MvcSeleniumScraper.Models
         public double LastPrice { get; set; }
         public double Change { get; set; }
         public double ChangePercent { get; set; }
-        public string MarketTime { get; set; }
         public string Volume { get; set; }
         public string AvgVol { get; set; }
-        public string Shares { get; set; }
         public string MarketCap { get; set; }
     }
 }

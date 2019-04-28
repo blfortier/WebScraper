@@ -14,10 +14,8 @@
           <Property Name="LastPrice" Type="float" Nullable="false" />
           <Property Name="Change" Type="float" Nullable="false" />
           <Property Name="ChangePercent" Type="float" Nullable="false" />
-          <Property Name="MarketTime" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Volume" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AvgVol" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Shares" Type="varchar" MaxLength="50" />
           <Property Name="MarketCap" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Stocks">
@@ -28,10 +26,8 @@
           <Property Name="LastPrice" Type="float" Nullable="false" />
           <Property Name="Change" Type="float" Nullable="false" />
           <Property Name="ChangePercent" Type="float" Nullable="false" />
-          <Property Name="MarketTime" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="Volume" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AvgVol" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Shares" Type="varchar" MaxLength="50" />
           <Property Name="MarketCap" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="StockDataModelStoreContainer">
@@ -52,10 +48,8 @@
           <Property Name="LastPrice" Type="Double" Nullable="false" />
           <Property Name="Change" Type="Double" Nullable="false" />
           <Property Name="ChangePercent" Type="Double" Nullable="false" />
-          <Property Name="MarketTime" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AvgVol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Shares" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MarketCap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="Stock">
@@ -66,13 +60,11 @@
           <Property Name="LastPrice" Type="Double" Nullable="false" />
           <Property Name="Change" Type="Double" Nullable="false" />
           <Property Name="ChangePercent" Type="Double" Nullable="false" />
-          <Property Name="MarketTime" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AvgVol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Shares" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MarketCap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="StockDataEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StockDataEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="StockHistories" EntityType="Self.StockHistory" />
           <EntitySet Name="Stocks" EntityType="Self.Stock" />
         </EntityContainer>
@@ -81,7 +73,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockDataModelStoreContainer" CdmEntityContainer="StockDataEntities">
+        <EntityContainerMapping StorageEntityContainer="StockDataModelStoreContainer" CdmEntityContainer="StockDataEntities2">
           <EntitySetMapping Name="StockHistories">
             <EntityTypeMapping TypeName="StockDataModel.StockHistory">
               <MappingFragment StoreEntitySet="StockHistory">
@@ -90,10 +82,8 @@
                 <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
                 <ScalarProperty Name="Change" ColumnName="Change" />
                 <ScalarProperty Name="ChangePercent" ColumnName="ChangePercent" />
-                <ScalarProperty Name="MarketTime" ColumnName="MarketTime" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="AvgVol" ColumnName="AvgVol" />
-                <ScalarProperty Name="Shares" ColumnName="Shares" />
                 <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -105,10 +95,8 @@
                 <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
                 <ScalarProperty Name="Change" ColumnName="Change" />
                 <ScalarProperty Name="ChangePercent" ColumnName="ChangePercent" />
-                <ScalarProperty Name="MarketTime" ColumnName="MarketTime" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="AvgVol" ColumnName="AvgVol" />
-                <ScalarProperty Name="Shares" ColumnName="Shares" />
                 <ScalarProperty Name="MarketCap" ColumnName="MarketCap" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -128,7 +116,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

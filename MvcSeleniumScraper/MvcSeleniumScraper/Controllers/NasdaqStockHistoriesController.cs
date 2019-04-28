@@ -10,34 +10,29 @@ using MvcSeleniumScraper.Models;
 
 namespace MvcSeleniumScraper.Controllers
 {
-    [Authorize]
-    public class StockHistoriesController : Controller
+    public class NasdaqStockHistoriesController : Controller
     {
-        private StockDataEntities2 db = new StockDataEntities2();
+        private StockDataEntities1 db = new StockDataEntities1();
 
-        // GET: StockHistories
-        [Authorize]
+        // GET: NasdaqStockHistories
         public ActionResult Index()
         {
-            //if (!User.Identity.IsAuthenticated)
-            //    return RedirectToAction("Register", "Account");
-
-            return View(db.StockHistories.ToList());
+            return View(db.NasdaqStockHistories.ToList());
         }
 
-        // GET: StockHistories/Details/5
+        // GET: NasdaqStockHistories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            StockHistory stockHistory = db.StockHistories.Find(id);
-            if (stockHistory == null)
+            NasdaqStockHistory nasdaqStockHistory = db.NasdaqStockHistories.Find(id);
+            if (nasdaqStockHistory == null)
             {
                 return HttpNotFound();
             }
-            return View(stockHistory);
+            return View(nasdaqStockHistory);
         }
 
         protected override void Dispose(bool disposing)

@@ -35,14 +35,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MarketTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MarketTime)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Volume)
         </dt>
 
@@ -58,15 +50,7 @@
             @Html.DisplayFor(model => model.AvgVol)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Shares)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Shares)
-        </dd>
-
-        <dt>
+        <dt> 
             @Html.DisplayNameFor(model => model.MarketCap)
         </dt>
 
@@ -77,6 +61,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Symbol }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

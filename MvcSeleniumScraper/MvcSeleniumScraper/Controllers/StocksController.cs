@@ -15,7 +15,7 @@ namespace MvcSeleniumScraper.Controllers
     [Authorize]
     public class StocksController : Controller
     {
-        private StockDataEntities db = new StockDataEntities();
+        private StockDataEntities2 db = new StockDataEntities2();
 
         // GET: Stocks
         [Authorize]

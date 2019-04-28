@@ -184,6 +184,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NasdaqStockCurrentsController.cs" />
+    <Compile Include="Controllers\NasdaqStockHistoriesController.cs" />
+    <Compile Include="Controllers\PickStockController.cs" />
     <Compile Include="Controllers\StockHistoriesController.cs" />
     <Compile Include="Controllers\StocksController.cs" />
     <Compile Include="Global.asax.cs">
@@ -192,6 +195,27 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NasdaqModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NasdaqModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NasdaqModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NasdaqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NasdaqModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NasdaqModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NasdaqStockCurrent.cs">
+      <DependentUpon>NasdaqModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NasdaqStockHistory.cs">
+      <DependentUpon>NasdaqModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Stock.cs">
       <DependentUpon>StockInfo.tt</DependentUpon>
     </Compile>
@@ -229,6 +253,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\NasdaqModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NasdaqModel.edmx</DependentUpon>
+      <LastGenOutput>NasdaqModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\NasdaqModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NasdaqModel.edmx</DependentUpon>
+      <LastGenOutput>NasdaqModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\StockInfo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>StockInfo.edmx</DependentUpon>
@@ -241,6 +275,13 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\NasdaqModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NasdaqModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\NasdaqModel.edmx.diagram">
+      <DependentUpon>NasdaqModel.edmx</DependentUpon>
+    </Content>
     <EntityDeploy Include="Models\StockInfo.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StockInfo.Designer.cs</LastGenOutput>
@@ -295,8 +336,12 @@
     <Content Include="Views\StockHistories\Details.cshtml" />
     <Content Include="Views\StockHistories\Index.cshtml" />
     <Content Include="Views\Stocks\Details.cshtml" />
-    <Content Include="Views\Stocks\Edit.cshtml" />
     <Content Include="Views\Stocks\Index.cshtml" />
+    <Content Include="Views\NasdaqStockHistories\Details.cshtml" />
+    <Content Include="Views\NasdaqStockHistories\Index.cshtml" />
+    <Content Include="Views\NasdaqStockCurrents\Details.cshtml" />
+    <Content Include="Views\NasdaqStockCurrents\Index.cshtml" />
+    <Content Include="Views\PickStock\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

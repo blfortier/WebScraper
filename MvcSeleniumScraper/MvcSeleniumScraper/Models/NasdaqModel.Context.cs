@@ -13,10 +13,10 @@ namespace MvcSeleniumScraper.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StockDataEntities2 : DbContext
+    public partial class StockDataEntities1 : DbContext
     {
-        public StockDataEntities2()
-            : base("name=StockDataEntities2")
+        public StockDataEntities1()
+            : base("name=StockDataEntities1")
         {
         }
     
@@ -25,7 +25,7 @@ namespace MvcSeleniumScraper.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<StockHistory> StockHistories { get; set; }
-        public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<NasdaqStockCurrent> NasdaqStockCurrents { get; set; }
+        public virtual DbSet<NasdaqStockHistory> NasdaqStockHistories { get; set; }
     }
 }

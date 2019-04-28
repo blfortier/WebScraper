@@ -28,11 +28,10 @@ namespace ScraperUsingSelenium
             string latestScrape = @"IF EXISTS(SELECT* FROM Stocks WHERE Symbol = @Symbol)
                                         UPDATE Stocks
                                         SET LastPrice = @LastPrice, Change = @Change, ChangePercent = @ChangePercent,
-                                            MarketTime = @MarketTime, Volume = @Volume,
-                                            AvgVol = @AvgVol, MarketCap = @MarketCap 
+                                            Volume = @Volume, AvgVol = @AvgVol, MarketCap = @MarketCap 
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @MarketCap);";
+                                        INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
 
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -49,7 +48,6 @@ namespace ScraperUsingSelenium
                         command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
                         command.Parameters.Add(new SqlParameter("@ChangePercent", stock.Change));
-                        command.Parameters.Add(new SqlParameter("@MarketTime", stock.MarketTime));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
                         command.Parameters.Add(new SqlParameter("@AvgVol", stock.AvgVol));
                         command.Parameters.Add(new SqlParameter("@MarketCap", stock.MarketCap));
@@ -71,7 +69,7 @@ namespace ScraperUsingSelenium
 
         private static void InsertIntoSrapeHistory(Stock stock, string connectionString)
         {
-            string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @MarketTime, @Volume, @AvgVol, @MarketCap);";
+            string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -85,7 +83,6 @@ namespace ScraperUsingSelenium
                         command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
                         command.Parameters.Add(new SqlParameter("@ChangePercent", stock.Change));
-                        command.Parameters.Add(new SqlParameter("@MarketTime", stock.MarketTime));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
                         command.Parameters.Add(new SqlParameter("@AvgVol", stock.AvgVol));
                         command.Parameters.Add(new SqlParameter("@MarketCap", stock.MarketCap));
