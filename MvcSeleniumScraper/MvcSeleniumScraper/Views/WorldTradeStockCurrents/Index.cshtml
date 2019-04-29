@@ -4,10 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2 class="jumbotron">WorldTradeData API</h2>
+<p>Current Stock Data</p>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
 </p>
 <table class="table">
     <tr>
@@ -41,9 +42,7 @@
             @Html.DisplayFor(modelItem => item.ChangePercent)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Symbol }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Symbol }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Symbol })
+            @Html.ActionLink("Details", "Details", new { id=item.Symbol }) 
         </td>
     </tr>
 }

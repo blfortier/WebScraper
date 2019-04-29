@@ -10,9 +10,10 @@ using MvcSeleniumScraper.Models;
 
 namespace MvcSeleniumScraper.Controllers
 {
+    [Authorize]
     public class WorldTradeStockCurrentsController : Controller
     {
-        private StockDataEntities3 db = new StockDataEntities3();
+        private StockDataEntities4 db = new StockDataEntities4();
 
         // GET: WorldTradeStockCurrents
         public ActionResult Index()

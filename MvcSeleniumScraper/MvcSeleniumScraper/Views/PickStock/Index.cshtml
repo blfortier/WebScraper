@@ -3,20 +3,18 @@
     ViewBag.Title = "PickStock";
 }
 
-<h1>Pick your Stock Source</h1>
+<h1 class="jumbotron">Pick your Stock Source</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Yahoo Finance</h2>
-        <p>
-            TODO
-        </p>
-        <button>@Html.ActionLink("Current Data", "Index", "Stocks")</button>
-        <button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
-
-        <p>@Html.ActionLink("Go to Stocks", "Index", "NasdaqStockCurrents")</p>
+    <div class="col-md-4 card text-center">
+            <h2>Yahoo Finance</h2>
+            <p>
+                TODO
+            </p>
+            <button>@Html.ActionLink("Current Data", "Index", "Stocks")</button>
+            <button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 card text-center">
         <h2>Most active stock list on the Nasdaq Website</h2>
         <p>
             TODO
@@ -24,7 +22,7 @@
         <button>@Html.ActionLink("Current Data", "Index", "NasdaqStockCurrents")</button>
         <button>@Html.ActionLink("Stock History", "Index", "NasdaqStockHistories")</button>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 card text-center">
         <h2>WorldTradingData Api</h2>
         <p>TODO</p>
         <button>@Html.ActionLink("Current Data", "Index", "WorldTradeStockCurrents")</button>

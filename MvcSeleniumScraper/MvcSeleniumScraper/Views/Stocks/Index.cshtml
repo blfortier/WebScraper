@@ -6,11 +6,12 @@
 
 <h2>Stocks</h2>
 <button>@Html.ActionLink("Update Stock Info", "NewScrape", "Stocks")</button>
+<button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
 
 <p>
     @*  @Html.ActionLink("Create New", "Create") *@
 </p>
-<table class="table">
+<table class="table display">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Symbol)
@@ -38,33 +39,33 @@
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Symbol)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastPrice)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Change)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChangePercent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Volume)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AvgVol)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MarketCap)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Symbol })
-            @*    @Html.ActionLink("Delete", "Delete", new { id=item.Symbol }) *@
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Change)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChangePercent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvgVol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketCap)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Symbol })
+                @*    @Html.ActionLink("Delete", "Delete", new { id=item.Symbol }) *@
+            </td>
+        </tr>
     }
 
 </table>

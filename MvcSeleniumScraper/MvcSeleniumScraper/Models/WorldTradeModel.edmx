@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="StockDataModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="StockDataModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="WorldTradeStockCurrent">
           <Key>
             <PropertyRef Name="Symbol" />
@@ -30,7 +30,8 @@
           <EntitySet Name="WorldTradeStockCurrent" EntityType="Self.WorldTradeStockCurrent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WorldTradeStockHistory" EntityType="Self.WorldTradeStockHistory" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StockDataModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -55,7 +56,7 @@
           <Property Name="Change" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ChangePercent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityContainer Name="StockDataEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StockDataEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="WorldTradeStockCurrents" EntityType="Self.WorldTradeStockCurrent" />
           <EntitySet Name="WorldTradeStockHistories" EntityType="Self.WorldTradeStockHistory" />
         </EntityContainer>
@@ -64,7 +65,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StockDataModel2StoreContainer" CdmEntityContainer="StockDataEntities3">
+        <EntityContainerMapping StorageEntityContainer="StockDataModel2StoreContainer" CdmEntityContainer="StockDataEntities4">
           <EntitySetMapping Name="WorldTradeStockCurrents">
             <EntityTypeMapping TypeName="StockDataModel2.WorldTradeStockCurrent">
               <MappingFragment StoreEntitySet="WorldTradeStockCurrent">
