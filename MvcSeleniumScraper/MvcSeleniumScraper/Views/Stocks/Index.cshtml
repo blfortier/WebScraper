@@ -4,7 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Stocks</h2>
+
+@*<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="~/Scripts/paginathing.js"></script>*@
+
+<h2 class="jumbotron">Yahoo Stocks</h2>
 <button>@Html.ActionLink("Update Stock Info", "NewScrape", "Stocks")</button>
 <button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
 
@@ -12,60 +16,76 @@
     @*  @Html.ActionLink("Create New", "Create") *@
 </p>
 <table class="table display">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Symbol)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Change)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChangePercent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Volume)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvgVol)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MarketCap)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Symbol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Change)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChangePercent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Volume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AvgVol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarketCap)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Symbol })
-                @*    @Html.ActionLink("Delete", "Delete", new { id=item.Symbol }) *@
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Symbol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Change)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangePercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvgVol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MarketCap)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody id="yahooCurrent">
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Symbol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Change)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChangePercent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvgVol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MarketCap)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Symbol })
+                    @*    @Html.ActionLink("Delete", "Delete", new { id=item.Symbol }) *@
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+
+@*<script>
+    $('#yahooCurrent').paginathing({
+        perPage: 10,
+        prevText: false,
+        nextText: false,
+        pageNumbers: false,
+        firstText: false,
+        lastText: false,
+    });
+
+</script>*@

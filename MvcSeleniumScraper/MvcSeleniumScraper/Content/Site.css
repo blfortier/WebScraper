@@ -23,9 +23,8 @@ textarea {
     max-width: 280px;
 }
 
-/* Taken from the datatables site for pagnation of my tables*/
-div.dataTables_wrapper {
-    margin-bottom: 3em;
+#landing {
+    background-image: url("/agenda-analysis-business-plan-990818 (3).jpg");
+    height: 100vh;
 }
-
 
