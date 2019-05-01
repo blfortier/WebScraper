@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcSeleniumScraper.Models;
+using MvcSeleniumScraper.ScraperService;
+using Database = MvcSeleniumScraper.ScraperService.Database;
 
 namespace MvcSeleniumScraper.Controllers
 {
@@ -23,6 +25,21 @@ namespace MvcSeleniumScraper.Controllers
             //    return RedirectToAction("Register", "Account");
 
             return View(db.StockHistories.ToList());
+        }
+
+        [Authorize]
+        public ActionResult ClearStockHistory()
+        {
+            if (ModelState.IsValid)
+            {
+                string connectionString = null;
+                connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
+                Database.DeleteTableData(connectionString);
+                Database.ResetAutoIncrementer(connectionString);                
+            }
+           // return RedirectToAction("Current Data", "Index", "Stocks");
+            return RedirectToAction("Index");
         }
 
         // GET: StockHistories/Details/5

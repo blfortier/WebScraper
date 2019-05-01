@@ -13,10 +13,10 @@ namespace MvcSeleniumScraper.RestSharpScraperService
             string connectionString = null;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-
             //    DeleteTableData(connectionString);
             //    ResetAutoIncrementer(connectionString);        
 
+            //  SelectTop5Stock(connectionString);
             InsertIntoLatestSrape(stock, connectionString);
             InsertIntoSrapeHistory(stock, connectionString);
         }
@@ -31,24 +31,15 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                                     ELSE
                                         INSERT INTO WorldTradeStockCurrent VALUES(@Name, @Symbol, @Price, @Change, @ChangePercent);";
 
-
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
-                    // Console.WriteLine("Connection open...");
-
                     using (SqlCommand command = new SqlCommand(latestScrape, con))
                     {
-                        if (stock.Symbol == null)
-                            Console.WriteLine("wth");
-                        else
-                            Console.WriteLine("idk");
-
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
-                        Console.WriteLine(stock.Name.Length);
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                         command.Parameters.Add(new SqlParameter("@Price", stock.Price));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
@@ -100,6 +91,34 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                     Console.WriteLine("Connection sucessfully closed...");
             }
         }
+
+        //public static void SelectTop5Stock(string connection)
+        //{
+        //    //Symbol, Name, Price, Change, ChangePercent
+        //    string databaseQuery = "SELECT * FROM WorldTradeStockHistory" +
+        //                           "WHERE WorkdTradeStockHistory.row <= 5;";
+        //    using (SqlConnection con = new SqlConnection(connection))
+        //    {
+        //        con.Open();
+
+        //        if (con.State == System.Data.ConnectionState.Open)
+        //        {
+        //            using (SqlCommand cmd = new SqlCommand(databaseQuery, con))
+        //            {
+        //                SqlDataReader reader = cmd.ExecuteReader();
+
+        //                while (reader.Read())
+        //                {
+        //                    Console.WriteLine("{0} {1} {2} {3} {4}", (string)reader["Symbol"],
+        //                        (string)reader["Name"], (string)reader["Price"], (string)reader["Change"],
+        //                        (string)reader["ChangePercent"]);
+        //                };
+        //                reader.NextResult();                    
+        //            }
+        //        }
+        //        con.Close();
+        //    }
+        //}
 
         public static void DeleteTableData(string connection)
         {

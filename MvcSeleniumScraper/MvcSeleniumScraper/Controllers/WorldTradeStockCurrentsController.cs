@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MvcSeleniumScraper.Models;
+using MvcSeleniumScraper.RestSharpScraperService;
 
 namespace MvcSeleniumScraper.Controllers
 {
@@ -19,6 +20,18 @@ namespace MvcSeleniumScraper.Controllers
         public ActionResult Index()
         {
             return View(db.WorldTradeStockCurrents.ToList());
+        }
+
+
+        [Authorize]
+        public ActionResult NewScrape()
+        {
+            if (ModelState.IsValid)
+            {
+                var apiCall = new ApiCall();
+                CallApi.GetStockData(apiCall);
+            }
+            return RedirectToAction("Index");
         }
 
         // GET: WorldTradeStockCurrents/Details/5

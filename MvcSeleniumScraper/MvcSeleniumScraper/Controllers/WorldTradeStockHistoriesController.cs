@@ -10,6 +10,7 @@ using MvcSeleniumScraper.Models;
 
 namespace MvcSeleniumScraper.Controllers
 {
+    [Authorize]
     public class WorldTradeStockHistoriesController : Controller
     {
         private StockDataEntities4 db = new StockDataEntities4();
@@ -52,10 +53,11 @@ namespace MvcSeleniumScraper.Controllers
             {
                 db.WorldTradeStockHistories.Add(worldTradeStockHistory);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
+            return RedirectToAction("Index");
 
-            return View(worldTradeStockHistory);
+
+           // return View(worldTradeStockHistory);
         }
 
         protected override void Dispose(bool disposing)

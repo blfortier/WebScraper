@@ -85,7 +85,7 @@ namespace MvcSeleniumScraper.ScraperService
                         command.Parameters.Add(new SqlParameter("@MarketCap", stock.MarketCap));
 
                         command.ExecuteNonQuery();
-                        Console.WriteLine("{0} added to StockHistory table...", stock.Symbol);
+                      //  Console.WriteLine("{0} added to StockHistory table...", stock.Symbol);
                     }
                 }
                 else
@@ -95,6 +95,44 @@ namespace MvcSeleniumScraper.ScraperService
                 con.Close();
                 if (con.State == System.Data.ConnectionState.Closed)
                     Console.WriteLine("Connection sucessfully closed...");
+            }
+        }
+
+        public static void DeleteTableData(string connection)
+        {
+            string deleteTableData = "DELETE FROM StockHistory;";
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(deleteTableData, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                        //Console.WriteLine("Table cleared...");
+                    }
+                }
+
+            }
+        }
+
+        public static void ResetAutoIncrementer(string connection)
+        {
+            string reseed = "DBCC CHECKIDENT ('StockHistory', RESEED, 0);";
+
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(reseed, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                        //Console.WriteLine("Auto incrementer reset...");
+                    }
+                }
             }
         }
     }

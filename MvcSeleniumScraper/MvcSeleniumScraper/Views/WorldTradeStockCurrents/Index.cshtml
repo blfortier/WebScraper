@@ -4,8 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="jumbotron">WorldTradeData API</h2>
-<p>Current Stock Data</p>
+<h2 class="jumbotron">WorldTradeData API Current</h2>
+<button>@Html.ActionLink("Update Stock Info", "NewScrape", "WorldTradeStockCurrents")</button>
+<button>@Html.ActionLink("Stock History", "Index", "WorldTradeStockHistories")</button>
+
 
 <p>
 
@@ -14,6 +16,9 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Symbol)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Price)
@@ -27,10 +32,14 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Symbol)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
@@ -42,9 +51,9 @@
             @Html.DisplayFor(modelItem => item.ChangePercent)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Symbol }) 
+            @Html.ActionLink("Details", "Details", new { id = item.Symbol })
         </td>
     </tr>
-}
+    }
 
 </table>

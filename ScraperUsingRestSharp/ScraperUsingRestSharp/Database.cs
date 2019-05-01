@@ -14,7 +14,6 @@ namespace ScraperUsingRestSharp
             string connectionString = null;
             connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-
             //    DeleteTableData(connectionString);
             //    ResetAutoIncrementer(connectionString);        
 
