@@ -12,21 +12,21 @@
 <p>
 
 </p>
-<table class="table">
+<table class="table" style="table-layout: fixed;">
     <tr>
-        <th>
+        <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.Symbol)
         </th>
-        <th>
+        <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.Price)
         </th>
-        <th>
+        <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.Change)
         </th>
-        <th>
+        <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.ChangePercent)
         </th>
         <th></th>
@@ -34,7 +34,7 @@
 
     @foreach (var item in Model)
     {
-    <tr>
+    <tr style="text-align: center;">
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -55,5 +55,4 @@
         </td>
     </tr>
     }
-
 </table>

@@ -15,10 +15,10 @@
 <p>
     @*  @Html.ActionLink("Create New", "Create") *@
 </p>
-<table class="table display">
-    <thead>
-        <tr>
-            <th>
+<table class="table display" >
+    <thead >
+        <tr style="text-align: center;">
+            <th style="text-align: center;">
                 @Html.DisplayNameFor(model => model.Symbol)
             </th>
             <th>
@@ -42,7 +42,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="yahooCurrent">
+    <tbody id="yahooCurrent" style="text-align: center">
 
         @foreach (var item in Model)
         {

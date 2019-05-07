@@ -17,9 +17,9 @@ namespace ScraperUsingRestSharp
             //    DeleteTableData(connectionString);
             //    ResetAutoIncrementer(connectionString);        
 
-         //  SelectTop5Stock(connectionString);
-           InsertIntoLatestSrape(stock, connectionString);
-           InsertIntoSrapeHistory(stock, connectionString);
+           SelectTop5Stock(connectionString);
+         //  InsertIntoLatestSrape(stock, connectionString);
+          // InsertIntoSrapeHistory(stock, connectionString);
         }
 
         private static void InsertIntoLatestSrape(dynamic stock, string connectionString)
@@ -93,33 +93,34 @@ namespace ScraperUsingRestSharp
             }
         }
 
-        //public static void SelectTop5Stock(string connection)
-        //{
-        //    //Symbol, Name, Price, Change, ChangePercent
-        //    string databaseQuery = "SELECT * FROM WorldTradeStockHistory" +
-        //                           "WHERE WorkdTradeStockHistory.row <= 5;";
-        //    using (SqlConnection con = new SqlConnection(connection))
-        //    {
-        //        con.Open();
+        public static void SelectTop5Stock(string connection)
+        {
+            //Symbol, Name, Price, Change, ChangePercent
+            string databaseQuery = "SELECT * FROM WorldTradeStockHistory" +
+                                   "WHERE MAX(Id)" +
+                                   "LIMIT 3";
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
 
-        //        if (con.State == System.Data.ConnectionState.Open)
-        //        {
-        //            using (SqlCommand cmd = new SqlCommand(databaseQuery, con))
-        //            {
-        //                SqlDataReader reader = cmd.ExecuteReader();
-                         
-        //                while (reader.Read())
-        //                {
-        //                    Console.WriteLine("{0} {1} {2} {3} {4}", (string)reader["Symbol"],
-        //                        (string)reader["Name"], (string)reader["Price"], (string)reader["Change"],
-        //                        (string)reader["ChangePercent"]);
-        //                };
-        //                reader.NextResult();                    
-        //            }
-        //        }
-        //        con.Close();
-        //    }
-        //}
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(databaseQuery, con))
+                    {
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("{0} {1} {2} {3} {4}", (string)reader["Symbol"],
+                                (string)reader["Name"], (string)reader["Price"], (string)reader["Change"],
+                                (string)reader["ChangePercent"]);
+                        };
+                        reader.NextResult();
+                    }
+                }
+                con.Close();
+            }
+        }
 
         public static void DeleteTableData(string connection)
         {

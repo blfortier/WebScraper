@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*#tableStyle {
+    width: 100%;
+    table-layout: fixed;
+}*/
+
