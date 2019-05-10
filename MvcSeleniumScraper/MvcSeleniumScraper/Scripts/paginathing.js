@@ -233,6 +233,6 @@
     activeClass: 'active',
     disabledClass: 'disabled',
     insertAfter: null,
-    pageNumbers: false,
+    pageNumbers: true,
   };
 })(jQuery, window, document);

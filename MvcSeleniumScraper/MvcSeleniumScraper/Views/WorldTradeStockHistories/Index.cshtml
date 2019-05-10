@@ -12,22 +12,22 @@
 <p>
     <button>@Html.ActionLink("Current", "Index", "WorldTradeStockCurrents")</button>
 </p>
-<table id="pagnation" style="table-layout: fixed;">
+<table id="pagnation" class="table table-hover">
     <thead>
-        <tr>
-            <th>
+        <tr >
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Symbol)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Change)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.ChangePercent)
             </th>
             <th></th>
@@ -36,7 +36,7 @@
     <tbody id="worldTrade">
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="text-center">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>

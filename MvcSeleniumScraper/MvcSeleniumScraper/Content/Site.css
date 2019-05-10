@@ -23,8 +23,16 @@ textarea {
     max-width: 280px;
 }
 
-/*#tableStyle {
-    width: 100%;
-    table-layout: fixed;
+/*.block-display button {
+    margin-bottom: 5px;
+    display: block;
 }*/
 
+.table > th {
+    table-layout:auto;
+    width: auto;
+}
+
+.style-text {
+    text-align: center;
+}

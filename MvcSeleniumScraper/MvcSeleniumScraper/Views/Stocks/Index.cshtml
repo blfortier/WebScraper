@@ -12,31 +12,28 @@
 <button>@Html.ActionLink("Update Stock Info", "NewScrape", "Stocks")</button>
 <button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
 
-<p>
-    @*  @Html.ActionLink("Create New", "Create") *@
-</p>
-<table class="table display" >
-    <thead >
-        <tr style="text-align: center;">
-            <th style="text-align: center;">
+<table class="table table-hover display" >
+    <thead>
+        <tr>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Symbol)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.LastPrice)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Change)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.ChangePercent)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.Volume)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.AvgVol)
             </th>
-            <th>
+            <th class="text-center">
                 @Html.DisplayNameFor(model => model.MarketCap)
             </th>
             <th></th>

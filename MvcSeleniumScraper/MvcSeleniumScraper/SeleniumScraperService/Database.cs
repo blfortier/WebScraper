@@ -45,7 +45,7 @@ namespace MvcSeleniumScraper.ScraperService
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
-                        command.Parameters.Add(new SqlParameter("@ChangePercent", stock.Change));
+                        command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
                         command.Parameters.Add(new SqlParameter("@AvgVol", stock.AvgVol));
                         command.Parameters.Add(new SqlParameter("@MarketCap", stock.MarketCap));
