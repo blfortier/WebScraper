@@ -8,16 +8,18 @@ namespace MvcSeleniumScraper.HAPScraperService
 {
     public class Database
     {
+        private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
         public static void InsertStockDataIntoDatabase(Stock stock)
         {
-            string connectionString = null;
-            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+            InsertIntoLatestScrape(stock, _connectionString);
+            InsertIntoScrapeHistory(stock, _connectionString);
+        }
 
-            // DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);        
-
-            InsertIntoLatestScrape(stock, connectionString);
-            InsertIntoSrapeHistory(stock, connectionString);
+        public static void Clear_Reset()
+        {
+            DeleteTableData(_connectionString);
+            ResetAutoIncrementer(_connectionString);
         }
 
         private static void InsertIntoLatestScrape(Stock stock, string connectionString)
@@ -66,7 +68,7 @@ namespace MvcSeleniumScraper.HAPScraperService
             }
         }
 
-        private static void InsertIntoSrapeHistory(Stock stock, string connectionString)
+        private static void InsertIntoScrapeHistory(Stock stock, string connectionString)
         {
             string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @Price, @Change);";
 
@@ -92,8 +94,43 @@ namespace MvcSeleniumScraper.HAPScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
+                //if (con.State == System.Data.ConnectionState.Closed)
+                //    Console.WriteLine("Connection sucessfully closed...");
+            }
+        }
+
+        public static void DeleteTableData(string connection)
+        {
+            string deleteTableData = "DELETE FROM NasdaqStockHistory;";
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(deleteTableData, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        public static void ResetAutoIncrementer(string connection)
+        {
+            string reseed = "DBCC CHECKIDENT ('NasdaqStockHistory', RESEED, 0);";
+
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(reseed, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
         }
     }

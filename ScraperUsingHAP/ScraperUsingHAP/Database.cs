@@ -10,17 +10,21 @@ namespace ScraperUsingHAP
 {
     class Database
     {
+        private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
         public static void InsertStockDataIntoDatabase(Stock stock)
         {
-            string connectionString = null;
-            //connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+            //string connectionString = null;
+            //connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-            // DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);        
+            InsertIntoLatestScrape(stock, _connectionString);
+            InsertIntoScrapeHistory(stock, _connectionString);
+        }
 
-            InsertIntoLatestScrape(stock, connectionString);
-            InsertIntoSrapeHistory(stock, connectionString);
+        public static void Clear_Reset()
+        {
+            DeleteTableData(_connectionString);
+            ResetAutoIncrementer(_connectionString);
         }
 
         private static void InsertIntoLatestScrape(Stock stock, string connectionString)
@@ -40,8 +44,6 @@ namespace ScraperUsingHAP
 
                 if (con.State == System.Data.ConnectionState.Open)
                 {
-                    // Console.WriteLine("Connection open...");
-
                     try
                     {
                         using (SqlCommand command = new SqlCommand(latestScrape, con))
@@ -52,7 +54,7 @@ namespace ScraperUsingHAP
                             command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                             command.ExecuteNonQuery();
-                            Console.WriteLine("{0} added to NasdaqStockCurrent table...", stock.Name);
+                           // Console.WriteLine("{0} added to NasdaqStockCurrent table...", stock.Name);
                         }
                     }
                     catch (Exception error)
@@ -66,12 +68,12 @@ namespace ScraperUsingHAP
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
+    
             }
+
         }
 
-        private static void InsertIntoSrapeHistory(Stock stock, string connectionString)
+        private static void InsertIntoScrapeHistory(Stock stock, string connectionString)
         {
             string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @Price, @Change);";
 
@@ -89,7 +91,7 @@ namespace ScraperUsingHAP
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                         command.ExecuteNonQuery();
-                        Console.WriteLine("{0} added to NasdaqStockHistory table...", stock.Name);
+                       // Console.WriteLine("{0} added to NasdaqStockHistory table...", stock.Name);
                     }
                 }
                 else
@@ -97,8 +99,44 @@ namespace ScraperUsingHAP
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
+            }
+        }
+
+
+        public static void DeleteTableData(string connection)
+        {
+            string deleteTableData = "DELETE FROM NasdaqStockHistory;";
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(deleteTableData, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                con.Close();
+            }
+        }
+
+        public static void ResetAutoIncrementer(string connection)
+        {
+            string reseed = "DBCC CHECKIDENT ('NasdaqStockHistory', RESEED, 0);";
+
+            using (SqlConnection con = new SqlConnection(connection))
+            {
+                con.Open();
+
+                if (con.State == System.Data.ConnectionState.Open)
+                {
+                    using (SqlCommand cmd = new SqlCommand(reseed, con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                con.Close();
             }
         }
     }

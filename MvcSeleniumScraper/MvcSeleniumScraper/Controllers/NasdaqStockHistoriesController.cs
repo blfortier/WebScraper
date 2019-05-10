@@ -20,6 +20,16 @@ namespace MvcSeleniumScraper.Controllers
             return View(db.NasdaqStockHistories.ToList());
         }
 
+        [Authorize]
+        public ActionResult ClearStockHistory()
+        {
+            if (ModelState.IsValid)
+            {
+                HAPScraperService.Database.Clear_Reset();
+            }
+  
+            return Redirect("/NasdaqStockCurrents");
+        }
         // GET: NasdaqStockHistories/Details/5
         public ActionResult Details(int? id)
         {

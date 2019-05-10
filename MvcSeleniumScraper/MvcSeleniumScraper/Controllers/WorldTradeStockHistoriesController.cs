@@ -21,6 +21,17 @@ namespace MvcSeleniumScraper.Controllers
             return View(db.WorldTradeStockHistories.ToList());
         }
 
+        [Authorize]
+        public ActionResult ClearStockHistory()
+        {
+            if (ModelState.IsValid)
+            {
+                RestSharpScraperService.Database.Clear_Reset();
+            }
+
+            return Redirect("/WorldTradeStockCurrents");
+        }
+
         // GET: WorldTradeStockHistories/Details/5
         public ActionResult Details(int? id)
         {

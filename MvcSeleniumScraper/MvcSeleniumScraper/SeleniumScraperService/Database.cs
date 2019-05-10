@@ -9,20 +9,21 @@ namespace MvcSeleniumScraper.ScraperService
 {
     public class Database
     {
+        private const string _connectionString= @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
         public static void InsertStockDataIntoDatabase(Stocks stock)
         {
-            string connectionString = null;
-            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
-
-
-            // DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);        
-
-            InsertIntoLatestSrape(stock, connectionString);
-            InsertIntoSrapeHistory(stock, connectionString);
+            InsertIntoLatestScrape(stock);
+            InsertIntoScrapeHistory(stock);
         }
 
-        private static void InsertIntoLatestSrape(Stocks stock, string connectionString)
+        public static void Clear_Reset()
+        {
+            DeleteTableData();
+            ResetAutoIncrementer();
+        }
+
+        private static void InsertIntoLatestScrape(Stocks stock)
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM Stocks WHERE Symbol = @Symbol)
@@ -34,7 +35,7 @@ namespace MvcSeleniumScraper.ScraperService
                                         INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -59,16 +60,14 @@ namespace MvcSeleniumScraper.ScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
-        private static void InsertIntoSrapeHistory(Stocks stock, string connectionString)
+        private static void InsertIntoScrapeHistory(Stocks stock)
         {
             string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -85,7 +84,6 @@ namespace MvcSeleniumScraper.ScraperService
                         command.Parameters.Add(new SqlParameter("@MarketCap", stock.MarketCap));
 
                         command.ExecuteNonQuery();
-                      //  Console.WriteLine("{0} added to StockHistory table...", stock.Symbol);
                     }
                 }
                 else
@@ -93,15 +91,13 @@ namespace MvcSeleniumScraper.ScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
-        public static void DeleteTableData(string connection)
+        public static void DeleteTableData()
         {
             string deleteTableData = "DELETE FROM StockHistory;";
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -110,18 +106,17 @@ namespace MvcSeleniumScraper.ScraperService
                     using (SqlCommand cmd = new SqlCommand(deleteTableData, con))
                     {
                         cmd.ExecuteNonQuery();
-                        //Console.WriteLine("Table cleared...");
                     }
                 }
-
+                con.Close();
             }
         }
 
-        public static void ResetAutoIncrementer(string connection)
+        public static void ResetAutoIncrementer()
         {
             string reseed = "DBCC CHECKIDENT ('StockHistory', RESEED, 0);";
 
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -130,9 +125,9 @@ namespace MvcSeleniumScraper.ScraperService
                     using (SqlCommand cmd = new SqlCommand(reseed, con))
                     {
                         cmd.ExecuteNonQuery();
-                        //Console.WriteLine("Auto incrementer reset...");
                     }
                 }
+                con.Close();
             }
         }
     }

@@ -18,13 +18,13 @@ namespace MvcSeleniumScraper.Controllers
         private StockDataEntities2 db = new StockDataEntities2();
 
         // GET: Stocks
-        [Authorize]
+     //   [Authorize]
         public ActionResult Index()
         {
             return View(db.Stocks.ToList());
         }
 
-        [Authorize]
+      //  [Authorize]
         public ActionResult NewScrape()
         {
             if (ModelState.IsValid)

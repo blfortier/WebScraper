@@ -8,20 +8,22 @@ namespace MvcSeleniumScraper.RestSharpScraperService
 {
     public class Database
     {
+        private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
         public static void InsertStockDataIntoDatabase(dynamic stock)
         {
-            string connectionString = null;
-            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
-
-            //    DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);        
-
             //  SelectTop5Stock(connectionString);
-            InsertIntoLatestSrape(stock, connectionString);
-            InsertIntoSrapeHistory(stock, connectionString);
+            InsertIntoLatestScrape(stock, _connectionString);
+            InsertIntoSrapeHistory(stock, _connectionString);
         }
 
-        private static void InsertIntoLatestSrape(dynamic stock, string connectionString)
+        public static void Clear_Reset()
+        {
+            DeleteTableData(_connectionString);
+            ResetAutoIncrementer(_connectionString);
+        }
+
+        private static void InsertIntoLatestScrape(dynamic stock, string connectionString)
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM WorldTradeStockCurrent WHERE Symbol = @Symbol)
@@ -54,9 +56,6 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
@@ -87,8 +86,6 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
@@ -135,7 +132,7 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                         Console.WriteLine("Table cleared...");
                     }
                 }
-
+                con.Close();
             }
         }
 
@@ -155,6 +152,7 @@ namespace MvcSeleniumScraper.RestSharpScraperService
                         Console.WriteLine("Auto incrementer reset...");
                     }
                 }
+                con.Close();
             }
         }
     }

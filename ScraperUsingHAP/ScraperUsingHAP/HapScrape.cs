@@ -43,15 +43,19 @@ namespace ScraperUsingHAP
                     //   Console.WriteLine("last price: {0}", lastPrice);
 
                     var changeNode = item.SelectSingleNode("td[5]/span");
-                    var changeString = ParseChangePercent(changeNode);
+                    string changeString = "";
+                    if (changeNode == null)
+                        changeString = "N/A";
+                    else
+                        changeString = ParseChangePercent(changeNode);
 
                     //   Console.WriteLine("change percent: {0}", changeString);
 
                     stock = new Stock(name, symbol, lastPrice, changeString);
                     stockInfo.Add(stock);
-                    // Console.WriteLine("Stock object created for {0}", stock.Name);
                     Database.InsertStockDataIntoDatabase(stock);
-                    Console.WriteLine("Stock inserted into database...");
+                    //Database.Clear_Reset();
+
 
                 }
             }
