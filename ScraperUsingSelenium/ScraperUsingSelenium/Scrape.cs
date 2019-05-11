@@ -17,7 +17,11 @@ namespace ScraperUsingSelenium
         {
             this._userId = id;
             this._password = pass;
-            this.driver = new ChromeDriver();
+
+            ChromeOptions option = new ChromeOptions();
+            option.AddArgument("--headless");
+
+            this.driver = new ChromeDriver(option);
         }
 
         public void NavigateToYahooFinance()
