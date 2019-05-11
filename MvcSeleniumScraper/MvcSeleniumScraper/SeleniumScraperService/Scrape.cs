@@ -13,10 +13,13 @@ namespace MvcSeleniumScraper.ScraperService
         private string _password;
         public ChromeDriver driver;
 
+        public string UserId { get => _userId; set => _userId = value; }
+        public string Password { get => _password; set => _password = value; }
+
         public Scrape(string id, string pass)
         {
-            this._userId = id;
-            this._password = pass;
+            this.UserId = id;
+            this.Password = pass;
 
             ChromeOptions option = new ChromeOptions();
             option.AddArgument("--headless");
@@ -33,10 +36,10 @@ namespace MvcSeleniumScraper.ScraperService
         public void LogIn()
         {
             driver.Navigate().GoToUrl("https://login.yahoo.com/");
-            driver.FindElement(By.Id("login-username")).SendKeys(this._userId + Keys.Enter);
+            driver.FindElement(By.Id("login-username")).SendKeys(this.UserId + Keys.Enter);
 
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            driver.FindElement(By.Id("login-passwd")).SendKeys(this._password + Keys.Enter);
+            driver.FindElement(By.Id("login-passwd")).SendKeys(this.Password + Keys.Enter);
         }
 
         public void ScrapeStockData()
@@ -95,9 +98,7 @@ namespace MvcSeleniumScraper.ScraperService
                                   avgVolume[i],
                                   marketCap[i]);
 
-                Console.WriteLine("{0} stock created", symbols[i]);
-
-                InsertStockDataIntoDatabase(stock);
+                InsertStockDataIntoDB(stock);
             }
         }
     }

@@ -11,7 +11,7 @@ namespace MvcSeleniumScraper.ScraperService
     {
         private const string _connectionString= @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockDataIntoDatabase(Stocks stock)
+        public static void InsertStockDataIntoDB(Stocks stock)
         {
             InsertIntoLatestScrape(stock);
             InsertIntoScrapeHistory(stock);

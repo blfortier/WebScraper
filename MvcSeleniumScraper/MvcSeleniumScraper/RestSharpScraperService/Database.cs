@@ -10,11 +10,11 @@ namespace MvcSeleniumScraper.RestSharpScraperService
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockDataIntoDatabase(dynamic stock)
+        public static void InsertStockDataIntoDB(dynamic stock)
         {
             //  SelectTop5Stock(connectionString);
             InsertIntoLatestScrape(stock, _connectionString);
-            InsertIntoSrapeHistory(stock, _connectionString);
+            InsertIntoScrapeHistory(stock, _connectionString);
         }
 
         public static void Clear_Reset()
@@ -59,7 +59,7 @@ namespace MvcSeleniumScraper.RestSharpScraperService
             }
         }
 
-        private static void InsertIntoSrapeHistory(dynamic stock, string connectionString)
+        private static void InsertIntoScrapeHistory(dynamic stock, string connectionString)
         {
             string scrapeHistory = "INSERT INTO WorldTradeStockHistory VALUES (@Name, @Symbol, @Price, @Change, @ChangePercent);";
 

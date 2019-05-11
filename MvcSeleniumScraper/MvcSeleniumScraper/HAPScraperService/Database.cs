@@ -10,19 +10,19 @@ namespace MvcSeleniumScraper.HAPScraperService
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockDataIntoDatabase(Stock stock)
+        public static void InsertStockDataIntoDB(Stock stock)
         {
-            InsertIntoLatestScrape(stock, _connectionString);
-            InsertIntoScrapeHistory(stock, _connectionString);
+            InsertIntoLatestScrape(stock);
+            InsertIntoScrapeHistory(stock);
         }
 
         public static void Clear_Reset()
         {
-            DeleteTableData(_connectionString);
-            ResetAutoIncrementer(_connectionString);
+            DeleteTableData();
+            ResetAutoIncrementer();
         }
 
-        private static void InsertIntoLatestScrape(Stock stock, string connectionString)
+        private static void InsertIntoLatestScrape(Stock stock)
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM NasdaqStockCurrent WHERE Symbol = @Symbol)
@@ -33,7 +33,7 @@ namespace MvcSeleniumScraper.HAPScraperService
                                         INSERT INTO NasdaqStockCurrent VALUES(@Name, @Symbol, @Price, @Change);";
 
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -49,7 +49,6 @@ namespace MvcSeleniumScraper.HAPScraperService
                             command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                             command.ExecuteNonQuery();
-                            Console.WriteLine("{0} added to NasdaqStockCurrent table...", stock.Name);
                         }
                     }
                     catch (Exception error)
@@ -63,16 +62,14 @@ namespace MvcSeleniumScraper.HAPScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
-        private static void InsertIntoScrapeHistory(Stock stock, string connectionString)
+        private static void InsertIntoScrapeHistory(Stock stock)
         {
             string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @Price, @Change);";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -86,7 +83,6 @@ namespace MvcSeleniumScraper.HAPScraperService
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                         command.ExecuteNonQuery();
-                        Console.WriteLine("{0} added to NasdaqStockHistory table...", stock.Name);
                     }
                 }
                 else
@@ -94,15 +90,13 @@ namespace MvcSeleniumScraper.HAPScraperService
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                //if (con.State == System.Data.ConnectionState.Closed)
-                //    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
-        public static void DeleteTableData(string connection)
+        public static void DeleteTableData()
         {
             string deleteTableData = "DELETE FROM NasdaqStockHistory;";
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -113,14 +107,15 @@ namespace MvcSeleniumScraper.HAPScraperService
                         cmd.ExecuteNonQuery();
                     }
                 }
+                con.Close();
             }
         }
 
-        public static void ResetAutoIncrementer(string connection)
+        public static void ResetAutoIncrementer()
         {
             string reseed = "DBCC CHECKIDENT ('NasdaqStockHistory', RESEED, 0);";
 
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -131,6 +126,7 @@ namespace MvcSeleniumScraper.HAPScraperService
                         cmd.ExecuteNonQuery();
                     }
                 }
+                con.Close();
             }
         }
     }

@@ -48,8 +48,7 @@ namespace ScraperUsingHAP
 
                     stock = new Stock(name, symbol, lastPrice, changeString);
                     stockInfo.Add(stock);
-                    InsertCurrentStock(stock);
-                    InsertStockHistory(stock);
+                    InsertStocksIntoDB(stock);
                 }
             }
         }

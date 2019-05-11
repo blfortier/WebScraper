@@ -7,10 +7,16 @@ namespace MvcSeleniumScraper.HAPScraperService
 {
     public class Stock
     {
-        public string Name { get; set; }
-        public string Symbol { get; set; }
-        public string LastPrice { get; set; }
-        public string Change { get; set; }
+        private string _name;
+        private string _symbol;
+        private string _lastPrice;
+        private string _change;
+
+        public string Name { get => _name; set => _name = value; }
+        public string Symbol { get => _symbol; set => _symbol = value; }
+        public string LastPrice { get => _lastPrice; set => _lastPrice = value; }
+        public string Change { get => _change; set => _change = value; }
+
 
         public Stock()
         {

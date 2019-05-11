@@ -12,13 +12,9 @@ namespace ScraperUsingHAP
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockHistory(Stock stock)
+        public static void InsertStocksIntoDB(Stock stock)
         {
             InsertIntoScrapeHistory(stock);
-        }
-
-        public static void InsertCurrentStock(Stock stock)
-        {
             InsertIntoLatestScrape(stock);
         }
 

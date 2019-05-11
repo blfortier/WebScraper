@@ -28,6 +28,6 @@ textarea {
     display: block;
 }*/
 
-#test > a.my-class.my-class {
+a.my-class.my-class {
     color: lightseagreen;
 }
