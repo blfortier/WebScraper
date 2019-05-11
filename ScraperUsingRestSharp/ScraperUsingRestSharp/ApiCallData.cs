@@ -8,21 +8,19 @@ using System.Threading.Tasks;
 
 namespace ScraperUsingRestSharp
 {
-    class ApiCall
+    class ApiCallData
     {
-        public List<string> Stocks;
-        public List<ApiCallResponse> StockList;
-        public string Url;
-        public string Key;
+        private List<string> stocks;
+        private List<ApiCallResponse> stockList;
+       
+        public List<string> Stocks { get => stocks; set => stocks = value; }
+        internal List<ApiCallResponse> StockList { get => stockList; set => stockList = value; }
 
-        public ApiCall()
+        public ApiCallData()
         {
             this.Stocks = new List<string>() { "HAS", "TWTR", "USMV",
                    "MINI", "KSS"};
             this.StockList = new List<ApiCallResponse>();
-
-            this.Url = "https://www.worldtradingdata.com/api/v1/stock";
-            this.Key = "Jq0GZBASNat6TMVl2pZ5gzTSi2pSKLR8fYZYZK2kZblOdp7W3BBhsMDCinFQ";
         }
     }
 }

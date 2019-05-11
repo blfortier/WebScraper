@@ -9,20 +9,25 @@ namespace ScraperUsingRestSharp
 {
     class Database
     {
-        public static void InsertStockDataIntoDatabase(dynamic stock)
+        private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
+        public static void InsertStockHistory(dynamic stock)
         {
-            string connectionString = null;
-            connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
-
-            //    DeleteTableData(connectionString);
-            //    ResetAutoIncrementer(connectionString);        
-
-           SelectTop5Stock(connectionString);
-         //  InsertIntoLatestSrape(stock, connectionString);
-          // InsertIntoSrapeHistory(stock, connectionString);
+            // SelectTop5Stock(_connectionString);
+            InsertIntoScrapeHistory(stock);
         }
 
-        private static void InsertIntoLatestSrape(dynamic stock, string connectionString)
+        public static void InsertCurrentStock(dynamic stock)
+        {
+            InsertIntoLatestScrape(stock);
+        }
+        public static void Clear_Reset()
+        {
+            DeleteTableData();
+            ResetAutoIncrementer();
+        }
+
+        private static void InsertIntoLatestScrape(dynamic stock)
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM WorldTradeStockCurrent WHERE Symbol = @Symbol)
@@ -32,7 +37,7 @@ namespace ScraperUsingRestSharp
                                     ELSE
                                         INSERT INTO WorldTradeStockCurrent VALUES(@Name, @Symbol, @Price, @Change, @ChangePercent);";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -55,17 +60,14 @@ namespace ScraperUsingRestSharp
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
-        private static void InsertIntoSrapeHistory(dynamic stock, string connectionString)
+        private static void InsertIntoScrapeHistory(dynamic stock)
         {
             string scrapeHistory = "INSERT INTO WorldTradeStockHistory VALUES (@Name, @Symbol, @Price, @Change, @ChangePercent);";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -88,8 +90,6 @@ namespace ScraperUsingRestSharp
                     Console.WriteLine("No connection...");
                 }
                 con.Close();
-                if (con.State == System.Data.ConnectionState.Closed)
-                    Console.WriteLine("Connection sucessfully closed...");
             }
         }
 
@@ -122,10 +122,10 @@ namespace ScraperUsingRestSharp
             }
         }
 
-        public static void DeleteTableData(string connection)
+        public static void DeleteTableData()
         {
             string deleteTableData = "DELETE FROM WorldTradeStockHistory;";
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -134,18 +134,17 @@ namespace ScraperUsingRestSharp
                     using (SqlCommand cmd = new SqlCommand(deleteTableData, con))
                     {
                         cmd.ExecuteNonQuery();
-                        Console.WriteLine("Table cleared...");
                     }
                 }
-
+                con.Close();
             }
         }
 
-        public static void ResetAutoIncrementer(string connection)
+        public static void ResetAutoIncrementer()
         {
             string reseed = "DBCC CHECKIDENT ('WorldTradeStockHistory', RESEED, 0);";
 
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -157,6 +156,7 @@ namespace ScraperUsingRestSharp
                         Console.WriteLine("Auto incrementer reset...");
                     }
                 }
+                con.Close();
             }
         }
     }

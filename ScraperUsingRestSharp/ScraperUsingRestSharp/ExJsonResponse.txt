@@ -1,0 +1,30 @@
+﻿{
+    "symbols_requested": 1,
+    "symbols_returned": 1,
+    "data": [
+        {
+            "symbol": "AAPL",
+            "name": "Apple Inc.",
+            "price": "197.18",
+            "currency": "USD",
+            "price_open": "197.42",
+            "day_high": "198.85",
+            "day_low": "192.77",
+            "52_week_high": "233.47",
+            "52_week_low": "142.00",
+            "day_change": "-2.77",
+            "change_pct": "-1.39",
+            "close_yesterday": "199.95",
+            "market_cap": "907240865792",
+            "volume": "37063716",
+            "volume_avg": "37084362",
+            "shares": "4601079808",
+            "stock_exchange_long": "NASDAQ Stock Exchange",
+            "stock_exchange_short": "NASDAQ",
+            "timezone": "EDT",
+            "timezone_name": "America/New_York",
+            "gmt_offset": "-14400",
+            "last_trade_time": "2019-05-10 16:00:01"
+        }
+    ]
+}
