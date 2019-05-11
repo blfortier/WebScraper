@@ -31,7 +31,7 @@ namespace MvcSeleniumScraper.Controllers
                 var apiCall = new ApiCall();
                 CallApi.GetStockData(apiCall);
             }
-            return RedirectToAction("Index");
+            return Redirect("Index");
         }
 
         // GET: WorldTradeStockCurrents/Details/5

@@ -35,7 +35,7 @@ namespace MvcSeleniumScraper.Controllers
                 scrape.NavigateToYahooFinance();
                 scrape.ScrapeStockData();
             }
-            return RedirectToAction("Index");
+            return Redirect("Index");
         }
 
         // GET: Stocks/Details/5

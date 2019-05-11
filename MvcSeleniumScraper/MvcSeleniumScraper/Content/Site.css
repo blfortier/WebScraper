@@ -28,11 +28,6 @@ textarea {
     display: block;
 }*/
 
-.table > th {
-    table-layout:auto;
-    width: auto;
-}
-
-.style-text {
-    text-align: center;
+#test > a.my-class.my-class {
+    color: lightseagreen;
 }

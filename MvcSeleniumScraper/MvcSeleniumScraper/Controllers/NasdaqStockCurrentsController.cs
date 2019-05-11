@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using MvcSeleniumScraper.HAPScraperService;
 using MvcSeleniumScraper.Models;
 
@@ -48,7 +49,8 @@ namespace MvcSeleniumScraper.Controllers
                 scrape.ScrapeStockData();
 
             }
-            return RedirectToAction("Index");
+
+            return Redirect("Index");
         }
 
         protected override void Dispose(bool disposing)

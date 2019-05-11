@@ -18,8 +18,6 @@ namespace ScraperUsingSelenium
             this._userId = id;
             this._password = pass;
             this.driver = new ChromeDriver();
-
-            //var driver = new ChromeDriver();
         }
 
         public void NavigateToYahooFinance()
@@ -42,9 +40,6 @@ namespace ScraperUsingSelenium
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             IList<IWebElement> stockData = driver.FindElements(By.ClassName("simpTblRow"));
             Console.WriteLine("Total stocks: " + stockData.Count);
-
-            //for (int j = 0; j < stockData.Count; j++)
-            //    Console.WriteLine(stockData[j].Text);
 
             IList<IWebElement> symbol_elements = driver.FindElements(By.XPath("//*[@aria-label='Symbol']"));
             IList<IWebElement> lastPrice_elements = driver.FindElements(By.XPath("//*[@aria-label='Last Price']"));
@@ -78,27 +73,15 @@ namespace ScraperUsingSelenium
             for (int i = 0; i < stockTotal; i++)
             {
                 symbols.Insert(i, Convert.ToString(extractedData.StockSymbols[i].Text));
-                //  Console.WriteLine("Parsed: {0} + {1}", symbols[i], symbols[i].GetType());
-
                 lastPrice.Insert(i, Convert.ToDouble(extractedData.StockLastPrices[i].Text));
-                //   Console.WriteLine("Parsed: {0} + {1}", lastPrice[i], lastPrice[i].GetType());
-
                 change.Insert(i, Convert.ToDouble(extractedData.StockChanges[i].Text));
-                //   Console.WriteLine("Parsed: {0} + {1}", change[i], change[i].GetType());
 
                 char trim = '%';
                 changePercent.Insert(i, Convert.ToDouble(extractedData.StockChangePercents[i].Text.TrimEnd(trim)));
-                //   Console.WriteLine("Parsed: {0}% + {1}", changePercent[i], changePercent[i].GetType());
 
                 volume.Insert(i, Convert.ToString(extractedData.StockVolumes[i].Text));
-                //   Console.WriteLine("Parsed: {0}M + {1}", volume[i], volume[i].GetType());
-
                 avgVolume.Insert(i, Convert.ToString(extractedData.StockAvgVolumes[i].Text));
-                //   Console.WriteLine("Parsed: {0}M + {1}", avgVolume[i], avgVolume[i].GetType());
-
                 marketCap.Insert(i, Convert.ToString(extractedData.StockMarketCaps[i].Text));
-                //    Console.WriteLine("Parsed: {0}B + {1}", marketCap[i], marketCap[i].GetType());
-
 
                 stock = new Stock(symbols[i],
                                   lastPrice[i],
