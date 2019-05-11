@@ -29,7 +29,7 @@ namespace ScraperUsingHAP
             Stock stock;
             List<Stock> stockInfo = new List<Stock>();
 
-            var tableNode = doc.DocumentNode.SelectNodes("//*[@id='_active']/table/tr");
+            HtmlNodeCollection tableNode = doc.DocumentNode.SelectNodes("//*[@id='_active']/table/tr");
 
             if (tableNode != null)
             {

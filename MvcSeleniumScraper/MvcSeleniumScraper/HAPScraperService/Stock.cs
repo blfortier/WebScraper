@@ -17,7 +17,6 @@ namespace MvcSeleniumScraper.HAPScraperService
         public string LastPrice { get => _lastPrice; set => _lastPrice = value; }
         public string Change { get => _change; set => _change = value; }
 
-
         public Stock()
         {
         }

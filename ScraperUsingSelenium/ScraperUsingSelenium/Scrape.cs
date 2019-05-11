@@ -57,6 +57,7 @@ namespace ScraperUsingSelenium
                                        volume_elements, avgVolume_elements, marketCap_elements);
 
             ParseScrapedData(scrape);
+            driver.Close();
         }
 
         private static void ParseScrapedData(ScrapedData extractedData)
