@@ -11,10 +11,14 @@ namespace ScraperUsingSelenium
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockDataIntoDatabase(Stock stock)
+        public static void InsertStockHistory(Stock stock)
+        {
+            InsertIntoScrapeHistory(stock);
+        }
+
+        public static void InsertCurrentStock(Stock stock)
         {
             InsertIntoLatestScrape(stock);
-            InsertIntoScrapeHistory(stock);
         }
 
         public static void Clear_Reset()

@@ -12,22 +12,23 @@ namespace ScraperUsingHAP
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
 
-        public static void InsertStockDataIntoDatabase(Stock stock)
+        public static void InsertStockHistory(Stock stock)
         {
-            //string connectionString = null;
-            //connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+            InsertIntoScrapeHistory(stock);
+        }
 
-            InsertIntoLatestScrape(stock, _connectionString);
-            InsertIntoScrapeHistory(stock, _connectionString);
+        public static void InsertCurrentStock(Stock stock)
+        {
+            InsertIntoLatestScrape(stock);
         }
 
         public static void Clear_Reset()
         {
-            DeleteTableData(_connectionString);
-            ResetAutoIncrementer(_connectionString);
+            DeleteTableData();
+            ResetAutoIncrementer();
         }
 
-        private static void InsertIntoLatestScrape(Stock stock, string connectionString)
+        private static void InsertIntoLatestScrape(Stock stock)
         {
 
             string latestScrape = @"IF EXISTS(SELECT* FROM NasdaqStockCurrent WHERE Symbol = @Symbol)
@@ -38,7 +39,7 @@ namespace ScraperUsingHAP
                                         INSERT INTO NasdaqStockCurrent VALUES(@Name, @Symbol, @Price, @Change);";
 
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -54,7 +55,6 @@ namespace ScraperUsingHAP
                             command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                             command.ExecuteNonQuery();
-                           // Console.WriteLine("{0} added to NasdaqStockCurrent table...", stock.Name);
                         }
                     }
                     catch (Exception error)
@@ -67,17 +67,15 @@ namespace ScraperUsingHAP
                 {
                     Console.WriteLine("No connection...");
                 }
-                con.Close();
-    
+                con.Close();    
             }
-
         }
 
-        private static void InsertIntoScrapeHistory(Stock stock, string connectionString)
+        private static void InsertIntoScrapeHistory(Stock stock)
         {
             string scrapeHistory = "INSERT INTO NasdaqStockHistory VALUES(@Name, @Symbol, @Price, @Change);";
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -91,7 +89,6 @@ namespace ScraperUsingHAP
                         command.Parameters.Add(new SqlParameter("@Change", stock.Change));
 
                         command.ExecuteNonQuery();
-                       // Console.WriteLine("{0} added to NasdaqStockHistory table...", stock.Name);
                     }
                 }
                 else
@@ -103,10 +100,10 @@ namespace ScraperUsingHAP
         }
 
 
-        public static void DeleteTableData(string connection)
+        public static void DeleteTableData()
         {
             string deleteTableData = "DELETE FROM NasdaqStockHistory;";
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
@@ -121,11 +118,11 @@ namespace ScraperUsingHAP
             }
         }
 
-        public static void ResetAutoIncrementer(string connection)
+        public static void ResetAutoIncrementer()
         {
             string reseed = "DBCC CHECKIDENT ('NasdaqStockHistory', RESEED, 0);";
 
-            using (SqlConnection con = new SqlConnection(connection))
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 

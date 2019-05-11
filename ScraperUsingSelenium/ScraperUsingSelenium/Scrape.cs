@@ -97,7 +97,8 @@ namespace ScraperUsingSelenium
 
                 Console.WriteLine("{0} stock created", symbols[i]);
 
-                InsertStockDataIntoDatabase(stock);
+                InsertStockHistory(stock);
+                InsertCurrentStock(stock);
             }
         }
     }

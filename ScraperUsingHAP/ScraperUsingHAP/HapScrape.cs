@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace ScraperUsingHAP
 {
-    class HapScrape
+    class HapScrape : Database
     {
-        public string Url { get; set; }
         HtmlWeb web;
         HtmlDocument doc;
+        private string _url;
+
+        public string Url { get => _url; set => _url = value; }
 
         public HapScrape(string url)
         {
@@ -33,33 +35,23 @@ namespace ScraperUsingHAP
             {
                 foreach (var item in tableNode)
                 {
-                    var symbol = item.SelectSingleNode("td/h3/a").InnerText;
-                    // Console.WriteLine("symbol: {0}", symbol);
+                    string symbol = item.SelectSingleNode("td/h3/a").InnerText;
+                    string name = item.SelectSingleNode("td[2]/b/a").InnerText;
+                    string lastPrice = item.SelectSingleNode("td[4]").InnerText.Replace(" ", string.Empty);
+                    HtmlNode changeNode = item.SelectSingleNode("td[5]/span");
 
-                    var name = item.SelectSingleNode("td[2]/b/a").InnerText;
-                    //   Console.WriteLine("name: {0}", name);
-
-                    var lastPrice = item.SelectSingleNode("td[4]").InnerText.Replace(" ", string.Empty);
-                    //   Console.WriteLine("last price: {0}", lastPrice);
-
-                    var changeNode = item.SelectSingleNode("td[5]/span");
                     string changeString = "";
                     if (changeNode == null)
                         changeString = "N/A";
                     else
                         changeString = ParseChangePercent(changeNode);
 
-                    //   Console.WriteLine("change percent: {0}", changeString);
-
                     stock = new Stock(name, symbol, lastPrice, changeString);
                     stockInfo.Add(stock);
-                    Database.InsertStockDataIntoDatabase(stock);
-                    //Database.Clear_Reset();
-
-
+                    InsertCurrentStock(stock);
+                    InsertStockHistory(stock);
                 }
             }
-
         }
 
         public static string ParseChangePercent(HtmlNode innerText)
