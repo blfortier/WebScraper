@@ -11,7 +11,7 @@ namespace ScraperUsingRestSharp
     class CallApi : Database
     {
         private const string _url = "https://www.worldtradingdata.com/api/v1/stock";
-        private const string _key = "Jq0GZBASNat6TMVl2pZ5gzTSi2pSKLR8fYZYZK2kZblOdp7W3BBhsMDCinFQ";
+        private const string _key = "Jq0GZBASNat6TMVl2pZ5gzTSi2pSKLR8fYZYZK2kZblOdp7W3BBhsMDCinFQ"; 
 
         public static void GetStockData(ApiCallData api)
         {
