@@ -20,7 +20,6 @@ namespace YellowPages
         {
             // ChromeOptions headless = new ChromeOptions();
             // headless.AddArgument("--headless");
-            //     options.addArguments("userdir=C:/Users/[your user name]/AppData/Local/Google/Chrome/User Data");
 
             this.Driver = new ChromeDriver();
         } 
@@ -43,26 +42,24 @@ namespace YellowPages
             }
             finally
             {
-              //  Driver.Close();
+               //Driver.Close();
             }
         }
 
         public void GetBusinessData()
         {
-            // //*[@id="lid-946496"]/div/div[2]/div[2]/h2/a/span
-            for (int numOfBusinesses = 0; numOfBusinesses < 10; numOfBusinesses++)
+            IList<IWebElement> data = Driver.FindElements(By.XPath("//*/div/div/div/h2"));
+
+            IList<IWebElement> name_elements = Driver.FindElements(By.XPath("//div/div/div[2]/h2/a/span"));
+            IList<IWebElement> address_elements = Driver.FindElements(By.XPath("//*[@class='street-address']"));
+            IList<IWebElement> city_elements = Driver.FindElements(By.XPath("//*[@class='locality']"));
+
+            Console.WriteLine(name_elements.Count);
+          
+            for (int i = 0; i < name_elements.Count; i++)
             {
-                IList<IWebElement> data = Driver.FindElements(By.XPath("//*/div/div/div/h2"));
-
-                IList<IWebElement> name_elements = Driver.FindElements(By.XPath("//*[@class='business-name']"));
-
-                foreach (var item in name_elements)
-                {
-                    Console.WriteLine(item.Inn
-                        );
-                }
+                Console.WriteLine("{0} : {1}, {2}", name_elements[i].Text, address_elements[i].Text, city_elements[i].Text);
             }
-            // //*[@class='business-name']"
         }
     }
 }
