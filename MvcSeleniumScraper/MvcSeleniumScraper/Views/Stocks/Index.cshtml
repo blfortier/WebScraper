@@ -22,9 +22,6 @@
                 @Html.DisplayNameFor(model => model.LastPrice)
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.Change)
-            </th>
-            <th class="text-center">
                 @Html.DisplayNameFor(model => model.ChangePercent)
             </th>
             <th class="text-center">
@@ -48,13 +45,10 @@
                     @Html.DisplayFor(modelItem => item.Symbol)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastPrice)
+                    $@Html.DisplayFor(modelItem => item.LastPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Change)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ChangePercent)
+                    @Html.DisplayFor(modelItem => item.ChangePercent)%
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Volume)
@@ -63,7 +57,7 @@
                     @Html.DisplayFor(modelItem => item.AvgVol)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MarketCap)
+                    $@Html.DisplayFor(modelItem => item.MarketCap)
                 </td>
                 <td>
                     @Html.ActionLink("Details", "Details", new { id = item.Symbol })

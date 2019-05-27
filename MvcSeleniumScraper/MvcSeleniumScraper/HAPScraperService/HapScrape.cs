@@ -10,17 +10,19 @@ namespace MvcSeleniumScraper.HAPScraperService
     public class HapScrape : Database
     {
         private string _url;
-        HtmlWeb web;
-        HtmlDocument doc;
+        private HtmlWeb _web;
+        private HtmlDocument _doc;
 
         public string Url { get => _url; set => _url = value; }
+        public HtmlWeb Web { get => _web; set => _web = value; }
+        public HtmlDocument Doc { get => _doc; set => _doc = value; }
 
         public HapScrape(string url)
         {
             this.Url = url;
 
-            web = new HtmlWeb();
-            doc = web.Load(url);
+            Web = new HtmlWeb();
+            Doc = Web.Load(Url);
         }
 
         public void ScrapeStockData()
@@ -28,7 +30,7 @@ namespace MvcSeleniumScraper.HAPScraperService
             Stock stock;
             List<Stock> stockInfo = new List<Stock>();
 
-            var tableNode = doc.DocumentNode.SelectNodes("//*[@id='_active']/table/tr");
+            var tableNode = Doc.DocumentNode.SelectNodes("//*[@id='_active']/table/tr");
 
             if (tableNode != null)
             {
@@ -61,9 +63,9 @@ namespace MvcSeleniumScraper.HAPScraperService
             string modifiedString = match.Groups[1].Value;
 
             if (innerText.Attributes["class"].Value == "green")
-                modifiedString = "+" + modifiedString;
+                modifiedString = "+" + modifiedString + "%";
             else
-                modifiedString = "-" + modifiedString;
+                modifiedString = "-" + modifiedString + "%";
 
             return modifiedString;
         }

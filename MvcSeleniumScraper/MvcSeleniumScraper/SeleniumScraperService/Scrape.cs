@@ -50,13 +50,12 @@ namespace MvcSeleniumScraper.ScraperService
 
             IList<IWebElement> symbol_elements = driver.FindElements(By.XPath("//*[@aria-label='Symbol']"));
             IList<IWebElement> lastPrice_elements = driver.FindElements(By.XPath("//*[@aria-label='Last Price']"));
-            IList<IWebElement> change_elements = driver.FindElements(By.XPath("//*[@aria-label='Change']"));
             IList<IWebElement> changePercent_elements = driver.FindElements(By.XPath("//*[@aria-label='Chg %']"));
             IList<IWebElement> volume_elements = driver.FindElements(By.XPath("//*[@aria-label='Volume']"));
             IList<IWebElement> avgVolume_elements = driver.FindElements(By.XPath("//*[@aria-label='Avg Vol (3m)']"));
             IList<IWebElement> marketCap_elements = driver.FindElements(By.XPath("//*[@aria-label='Market Cap']"));
 
-            ScrapedData scrape = new ScrapedData(symbol_elements, lastPrice_elements, change_elements, changePercent_elements,
+            ScrapedData scrape = new ScrapedData(symbol_elements, lastPrice_elements, changePercent_elements,
                                        volume_elements, avgVolume_elements, marketCap_elements);
 
             ParseScrapedData(scrape);
@@ -69,7 +68,6 @@ namespace MvcSeleniumScraper.ScraperService
 
             List<string> symbols = new List<string>();
             List<double> lastPrice = new List<double>();
-            List<double> change = new List<double>();
             List<double> changePercent = new List<double>();
             List<string> volume = new List<string>();
             List<string> avgVolume = new List<string>();
@@ -81,7 +79,6 @@ namespace MvcSeleniumScraper.ScraperService
             {
                 symbols.Insert(i, Convert.ToString(extractedData.StockSymbols[i].Text));
                 lastPrice.Insert(i, Convert.ToDouble(extractedData.StockLastPrices[i].Text));
-                change.Insert(i, Convert.ToDouble(extractedData.StockChanges[i].Text));
 
                 char trim = '%';
                 changePercent.Insert(i, Convert.ToDouble(extractedData.StockChangePercents[i].Text.TrimEnd(trim)));
@@ -92,7 +89,6 @@ namespace MvcSeleniumScraper.ScraperService
 
                 stock = new Stocks(symbols[i],
                                   lastPrice[i],
-                                  change[i],
                                   changePercent[i],
                                   volume[i],
                                   avgVolume[i],

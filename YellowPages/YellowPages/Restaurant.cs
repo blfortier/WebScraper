@@ -18,6 +18,8 @@ namespace YellowPages
         public string CityState { get => _cityState; set => _cityState = value; }
         public string PhoneNumber { get => _phoneNumber; set => _phoneNumber = value; }
 
+        public Restaurant() { }
+
         public Restaurant(string name, string address, string cityState, string phoneNumber)
         {
             this.Name = name;

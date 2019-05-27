@@ -46,7 +46,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastPrice" Type="Double" Nullable="false" />
-          <Property Name="Change" Type="Double" Nullable="false" />
           <Property Name="ChangePercent" Type="Double" Nullable="false" />
           <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AvgVol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -58,7 +57,6 @@
           </Key>
           <Property Name="Symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastPrice" Type="Double" Nullable="false" />
-          <Property Name="Change" Type="Double" Nullable="false" />
           <Property Name="ChangePercent" Type="Double" Nullable="false" />
           <Property Name="Volume" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="AvgVol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -80,7 +78,6 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
                 <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
-                <ScalarProperty Name="Change" ColumnName="Change" />
                 <ScalarProperty Name="ChangePercent" ColumnName="ChangePercent" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="AvgVol" ColumnName="AvgVol" />
@@ -93,7 +90,6 @@
               <MappingFragment StoreEntitySet="Stocks">
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
                 <ScalarProperty Name="LastPrice" ColumnName="LastPrice" />
-                <ScalarProperty Name="Change" ColumnName="Change" />
                 <ScalarProperty Name="ChangePercent" ColumnName="ChangePercent" />
                 <ScalarProperty Name="Volume" ColumnName="Volume" />
                 <ScalarProperty Name="AvgVol" ColumnName="AvgVol" />

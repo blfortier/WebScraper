@@ -28,11 +28,11 @@ namespace MvcSeleniumScraper.ScraperService
 
             string latestScrape = @"IF EXISTS(SELECT* FROM Stocks WHERE Symbol = @Symbol)
                                         UPDATE Stocks
-                                        SET LastPrice = @LastPrice, Change = @Change, ChangePercent = @ChangePercent,
+                                        SET LastPrice = @LastPrice, ChangePercent = @ChangePercent,
                                             Volume = @Volume, AvgVol = @AvgVol, MarketCap = @MarketCap 
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
+                                        INSERT INTO Stocks VALUES(@Symbol, @LastPrice, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
 
             using (SqlConnection con = new SqlConnection(_connectionString))
@@ -45,7 +45,6 @@ namespace MvcSeleniumScraper.ScraperService
                     {
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
-                        command.Parameters.Add(new SqlParameter("@Change", stock.Change));
                         command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
                         command.Parameters.Add(new SqlParameter("@AvgVol", stock.AvgVol));
@@ -65,7 +64,7 @@ namespace MvcSeleniumScraper.ScraperService
 
         private static void InsertIntoScrapeHistory(Stocks stock)
         {
-            string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @Change, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
+            string scrapeHistory = "INSERT INTO StockHistory VALUES (@Symbol, @LastPrice, @ChangePercent, @Volume, @AvgVol, @MarketCap);";
 
             using (SqlConnection con = new SqlConnection(_connectionString))
             {
@@ -77,7 +76,6 @@ namespace MvcSeleniumScraper.ScraperService
                     {
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@LastPrice", stock.LastPrice));
-                        command.Parameters.Add(new SqlParameter("@Change", stock.Change));
                         command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
                         command.Parameters.Add(new SqlParameter("@AvgVol", stock.AvgVol));

@@ -55,32 +55,94 @@ namespace YellowPages
 
             IList<IWebElement> name_elements = Driver.FindElements(By.XPath("//div/div/div[2]/h2/a/span"));
             IList<IWebElement> address_elements = Driver.FindElements(By.XPath("//*[@class='street-address']"));
-            IList<IWebElement> city_elements = Driver.FindElements(By.XPath("//*[@class='locality']")).ToList();
+            IList<IWebElement> city_elements = Driver.FindElements(By.XPath("//div/div/div[2]/div[2]/div[3]"));
+            IList<IWebElement> state_elements = Driver.FindElements(By.XPath("//div/div/div[2]/div[1]/p/span[3]"));
+            IList<IWebElement> zipCode_elements = Driver.FindElements(By.XPath("//div/div/div[2]/div[1]/p/span[4]"));
             IList<IWebElement> phoneNumber_elements = Driver.FindElements(By.XPath("//*[@class='phones phone primary']"));
 
-            Console.WriteLine(name_elements.Count);
+            ScrapedInfo restaurantInfo = new ScrapedInfo(name_elements, address_elements, city_elements, state_elements, zipCode_elements, phoneNumber_elements);
+            ParseData(restaurantInfo);
 
-            //Console.WriteLine(city_elements);
-            foreach (var item in city_elements)
+            //foreach (var item in zipCode_elements)
+            //{
+            //    Console.WriteLine(item.Text);
+
+            //}
+
+            //foreach (var item in city_elements)
+            //{
+            //    Console.WriteLine(item.Text);
+            //}
+
+            //for (int i = 0; i < name_elements.Count; i++)
+            //{
+            //    //   Console.WriteLine("{0} : {1}, {2} {3}", name_elements[i].Text,
+            //    //                                      address_elements[i].Text, 
+            //    //                                      city_elements[i].Text, 
+            //    //                                      phoneNumber_elements[i].Text);
+
+
+
+            //    //var restaurant = new Restaurant(name_elements[i].Text,
+            //    //                                address_elements[i].Text,
+            //    //                                city_elements[i].Text,
+            //    //                                phoneNumber_elements[i].Text);
+            //    //ListOfRestaurants.Add(restaurant);
+            //}
+        }
+
+        public static void ParseData(ScrapedInfo dataToParse)
+        {
+            int restaurantTotal = dataToParse.RestaurantName.Count;
+            Console.WriteLine("There are {0} restaurants returned from YP", restaurantTotal);
+
+            List<string> names = new List<string>();
+            List<string> addresses = new List<string>();
+            List<string> cities = new List<string>();
+            List<string> locale = new List<string>();
+            List<string> states = new List<string>();
+            List<string> zips = new List<string>();
+            List<string> phoneNumbers = new List<string>();
+
+            Restaurant restaurant = new Restaurant();
+
+            for (int i = 0; i < restaurantTotal; i++)
             {
-                Console.WriteLine(item.Text);
+                names.Insert(i, Convert.ToString(dataToParse.RestaurantName[i].Text));
+                Console.WriteLine("Parsed: {0} + {1}", names[i], names[i].GetType());
+
+                addresses.Insert(i, Convert.ToString(dataToParse.RestaurantAddress[i].Text));
+                Console.WriteLine("Parsed: {0} + {1}", addresses[i], addresses[i].GetType());
+                string city = Convert.ToString(dataToParse.RestaurantCity[i].Text);
+                string state = Convert.ToString(dataToParse.RestaurantState[i].Text);
+                string zip = Convert.ToString(dataToParse.RestaurantZip[i].Text);
+                string concated = ConcatCityStateZip(restaurantTotal, city, state, zip);
+
+                locale.Insert(i, concated);
+                Console.WriteLine("Parsed: {0} + {1}", locale[i], locale[i].GetType());
+
+
+                //    cities.Insert(i, Convert.ToString(dataToParse.RestaurantCity[i].Text));
+                //    Console.WriteLine("Parsed: {0} + {1}", cities[i], cities[i].GetType());
+
+                //     states.Insert(i, Convert.ToString(dataToParse.RestaurantState[i].Text));
+                //    Console.WriteLine("Parsed: {0} + {1}", cities[i], cities[i].GetType());
+
+                //       zips.Insert(i, Convert.ToString(dataToParse.RestaurantZip[i].Text));
+                //      Console.WriteLine("Parsed: {0} + {1}", cities[i], cities[i].GetType());
+
+                phoneNumbers.Insert(i, Convert.ToString(dataToParse.RestaurantPhoneNumber[i].Text));
+                Console.WriteLine("Parsed: {0} + {1}", phoneNumbers[i], phoneNumbers[i].GetType());
+
+
             }
+        }
 
-            for (int i = 0; i < name_elements.Count; i++)
-            {
-                //   Console.WriteLine("{0} : {1}, {2} {3}", name_elements[i].Text,
-                //                                      address_elements[i].Text, 
-                //                                      city_elements[i].Text, 
-                //                                      phoneNumber_elements[i].Text);
-
-             
-
-                var restaurant = new Restaurant(name_elements[i].Text,
-                                                address_elements[i].Text,
-                                                city_elements[i].Text,
-                                                phoneNumber_elements[i].Text);
-                ListOfRestaurants.Add(restaurant);
-            }
+        public static string ConcatCityStateZip(int total, string city, string state, string zip)
+        {
+            
+            return (city + state + zip);
+            
         }
     }
 }
