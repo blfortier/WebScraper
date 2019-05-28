@@ -12,7 +12,7 @@
 <p>
 
 </p>
-<table class="table table-hover" style="table-layout: fixed;">
+<table class="table table-hover">
     <tr>
         <th style="text-align: center;">
             @Html.DisplayNameFor(model => model.Name)
@@ -42,13 +42,13 @@
             @Html.DisplayFor(modelItem => item.Symbol)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Price)
+            $@Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Change)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ChangePercent)
+            @Html.DisplayFor(modelItem => item.ChangePercent)%
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.Symbol })
