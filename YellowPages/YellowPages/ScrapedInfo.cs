@@ -24,13 +24,14 @@ namespace YellowPages
         public IList<IWebElement> RestaurantZip { get => _restaurantZip; set => _restaurantZip = value; }
         public IList<IWebElement> RestaurantPhoneNumber { get => _restaurantPhoneNumber; set => _restaurantPhoneNumber = value; }
 
-        public ScrapedInfo(IList<IWebElement> restaurantName, IList<IWebElement> restaurantAddress, IList<IWebElement> restaurantCity, IList<IWebElement> restaurantState, IList<IWebElement> restaurantZip, IList<IWebElement> restaurantPhoneNumber)
+        //  IList<IWebElement> restaurantState, IList<IWebElement> restaurantZip,
+        public ScrapedInfo(IList<IWebElement> restaurantName, IList<IWebElement> restaurantAddress, IList<IWebElement> restaurantCity, IList<IWebElement> restaurantPhoneNumber)
         {
             RestaurantName = restaurantName;
             RestaurantAddress = restaurantAddress;
             RestaurantCity = restaurantCity;
-            RestaurantState = restaurantState;
-            RestaurantZip = restaurantZip;
+          //  RestaurantState = restaurantState;
+          //  RestaurantZip = restaurantZip;
             RestaurantPhoneNumber = restaurantPhoneNumber;
         }
 
