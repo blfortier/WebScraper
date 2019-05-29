@@ -15,13 +15,13 @@ namespace YellowPages
             searchYP.GetBusinessData();
 
             //    Console.WriteLine(searchYP.ListOfRestaurants);
-            foreach (var item in searchYP.ListOfRestaurants)
-            {
-                Console.WriteLine("Name: {0}\n" +
-                                  "Address: {1}\n" +
-                                  "City & State: {2}\n" +
-                                  "Phone Number: {3}\n", item.Name, item.Address, item.CityState, item.PhoneNumber);
-            }
+            //foreach (var item in searchYP.ListOfRestaurants)
+            //{
+            //    Console.WriteLine("Name: {0}\n" +
+            //                      "Address: {1}\n" +
+            //                      "City & State: {2}\n" +
+            //                      "Phone Number: {3}\n", item.Name, item.Address, item.CityState, item.PhoneNumber);
+            //}
         }
     }
 }

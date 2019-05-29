@@ -251,21 +251,6 @@
     <Compile Include="Models\StockHistory.cs">
       <DependentUpon>YahooModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\StockInfo.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StockInfo.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StockInfo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StockInfo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\StockInfo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StockInfo.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\WorldTradeStockCurrent.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -328,29 +313,12 @@
       <DependentUpon>NasdaqModel.edmx</DependentUpon>
       <LastGenOutput>NasdaqModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\StockInfo.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockInfo.edmx</DependentUpon>
-      <LastGenOutput>StockInfo.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\StockInfo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockInfo.edmx</DependentUpon>
-      <LastGenOutput>StockInfo.cs</LastGenOutput>
-    </Content>
     <EntityDeploy Include="Models\NasdaqModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>NasdaqModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\NasdaqModel.edmx.diagram">
       <DependentUpon>NasdaqModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\StockInfo.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StockInfo.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\StockInfo.edmx.diagram">
-      <DependentUpon>StockInfo.edmx</DependentUpon>
     </Content>
     <Content Include="Models\YahooModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

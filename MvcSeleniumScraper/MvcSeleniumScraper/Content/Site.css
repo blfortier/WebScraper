@@ -23,11 +23,10 @@ textarea {
     max-width: 280px;
 }
 
-/*.block-display button {
-    margin-bottom: 5px;
-    display: block;
-}*/
-
 a.my-class.my-class {
     color: lightseagreen;
+}
+
+.tab {
+    text-indent: 40px !important;
 }

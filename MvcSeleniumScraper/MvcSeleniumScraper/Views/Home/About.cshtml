@@ -2,5 +2,51 @@
     ViewBag.Title = "Scraper Retrospective";
 }
 <h2>@ViewBag.Title</h2>
-<h3>@ViewBag.Message</h3>
 
+<div class="container" style="font-family: 'Monda', sans-serif; text-indent: 40px;">
+    <p >
+            The Finance Scraper capstone project was such a learning experience. WIth an outline and no teachings of the
+        technology required to complete the project, it was a challenge I was excited to tackle. I was tasked with
+        creating a program that would pull stock data from various sources using various technologies (Selenium,
+        HTML Agility-Pack, and RESTSharp). I needed to scrape the data and insert it into a database. I would also
+        need to be able to return a history of past scraped data, request a new scrape, and see the most recent scraped data.
+    </p>
+
+    <p >
+            The timeframe given to complete the project was four weeks and we received a guideline with four different phases.
+        I set up a Trello board to organize my tasks and every day before starting my work, I conducted a daily meeting with
+        myself. This was done in order to mimic an Agile methodology. These daily meetings consisted of me thinking about
+        the previous days progress as well as my goals for that day. What kind of issues did I run into, what was my goal
+        to accomplish that day versus what the reality was.
+    </p>
+
+    <p >
+        The first phase of the project was to use to create my database and use Selenium WebDriver. I needed to use Selenium
+        to log into the Yahoo Finance site and scrape my watchlist of stocks, and then print them to the console. The documentation
+        for Selenium via their website, blog posts, and the wealth of knowledge on Stack Overflow made it easier than I had anticipated.
+        I was able to navigate the Yahoo Finance webpage and log into the account I set up for the project. I then navigated to the
+        stock watchlist and using XPath, I extracted the data I needed from the DOM. I was able to print this data to my console and
+        eventually, I entered it into my tables. This was the part I struggled with most.
+    </p>
+
+    <p >
+            After getting my data into my tables, it was time to start the front end, an ASP.NET MVC application. Having never created
+        an ASP.NET project before, I didn’t know where to begin. This aspect of the project was slow going with the initial research
+        I had to do. I added my models of the stocks and the application generated the code to view my tables of data. I brought in my
+        Selenium scraper and I created a button that would run the scraper and display the updated info on the page. I also created a
+        button that would clear the stock history table, rerouting the user to the list of stocks on the stock current page.
+    </p>
+
+    <p >
+            Before delving too deep into the aesthetics of the page, I needed to create two more scrapers and integrate them into the front
+        end as well. Using HTML Agility Pack, I loaded a page from the Nasdaq website. It contained a pre populated stock list, the Most
+        Active watchlist, and I was able to extract data from that. I stored the table as my root node, and accessed the children nodes to
+        obtain the stock info. My biggest issue with HAP was that originally, I was trying to scrape from a watchlist that I created on the
+        Edward Jones website. An issue arose though, because this site doesn’t require a log-in. My stock list was being stored in my cache
+        so there was nothing in the DOM for me to scrape. I talked about this issue with a classmate and they were able to help me see this.
+        After finishing the HAP scraper, I created another scraper using RestSharp and a RESTful API from World Trading Data. Their site had
+        great documentation so I was able to grab the stock info from the API in no time. I used Newtonsoft to deserialize my JSON response
+        and was soon able to insert this data into my database as well. The database aspect was pretty straightforward seeing as it was the
+        same for all scrapers. The only difference was the parameter and table names.
+    </p>
+</div>

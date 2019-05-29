@@ -4,36 +4,34 @@
     ViewBag.Title = "Index";
 }
 
-
-@*<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="~/Scripts/paginathing.js"></script>*@
-
-<h2 class="jumbotron">Yahoo Stocks</h2>
+<h2 class="jumbotron">
+    Yahoo Stocks
+</h2>
 <button>@Html.ActionLink("Update Stock Info", "NewScrape", "Stocks")</button>
 <button>@Html.ActionLink("Stock History", "Index", "StockHistories")</button>
 
-<table class="table table-hover display" >
+
+<table class="table table-hover display">
     <thead>
         <tr>
             <th class="text-center">
                 @Html.DisplayNameFor(model => model.Symbol)
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.LastPrice)
+                Last Price
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.ChangePercent)
+                Change Percent
             </th>
             <th class="text-center">
                 @Html.DisplayNameFor(model => model.Volume)
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.AvgVol)
+                Average Volume
             </th>
             <th class="text-center">
-                @Html.DisplayNameFor(model => model.MarketCap)
+                Market Cap
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody id="yahooCurrent" style="text-align: center">
@@ -65,17 +63,5 @@
             </tr>
         }
     </tbody>
-
 </table>
 
-@*<script>
-    $('#yahooCurrent').paginathing({
-        perPage: 10,
-        prevText: false,
-        nextText: false,
-        pageNumbers: false,
-        firstText: false,
-        lastText: false,
-    });
-
-</script>*@

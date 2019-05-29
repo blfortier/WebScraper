@@ -61,8 +61,21 @@ namespace YellowPages
             IList<IWebElement> phoneNumber_elements = Driver.FindElements(By.XPath("//*[@class='phones phone primary']"));
 
             ScrapedInfo restaurantInfo = new ScrapedInfo(name_elements, address_elements, city_elements, state_elements, zipCode_elements, phoneNumber_elements);
-            ParseData(restaurantInfo);
+            //  ParseData(restaurantInfo);
 
+            Console.WriteLine("outside of loop");
+         //   foreach (var item in state_elements)
+         //       Console.WriteLine(item.Text);
+
+        //    foreach (var item in address_elements)
+        //        Console.WriteLine(item.Text);
+
+            foreach (var item in city_elements)
+                Console.WriteLine(item.Text);
+
+          //  foreach (var item in zipCode_elements)
+          //      Console.WriteLine(item.Text);
+                        
             //foreach (var item in zipCode_elements)
             //{
             //    Console.WriteLine(item.Text);
@@ -106,20 +119,20 @@ namespace YellowPages
 
             Restaurant restaurant = new Restaurant();
 
-            for (int i = 0; i < restaurantTotal; i++)
+            for (int i = 0; i < restaurantTotal -1; i++)
             {
                 names.Insert(i, Convert.ToString(dataToParse.RestaurantName[i].Text));
                 Console.WriteLine("Parsed: {0} + {1}", names[i], names[i].GetType());
 
                 addresses.Insert(i, Convert.ToString(dataToParse.RestaurantAddress[i].Text));
-                Console.WriteLine("Parsed: {0} + {1}", addresses[i], addresses[i].GetType());
+            //    Console.WriteLine("Parsed: {0} + {1}", addresses[i], addresses[i].GetType());
                 string city = Convert.ToString(dataToParse.RestaurantCity[i].Text);
                 string state = Convert.ToString(dataToParse.RestaurantState[i].Text);
                 string zip = Convert.ToString(dataToParse.RestaurantZip[i].Text);
                 string concated = ConcatCityStateZip(restaurantTotal, city, state, zip);
 
                 locale.Insert(i, concated);
-                Console.WriteLine("Parsed: {0} + {1}", locale[i], locale[i].GetType());
+         //       Console.WriteLine("Parsed: {0} + {1}", locale[i], locale[i].GetType());
 
 
                 //    cities.Insert(i, Convert.ToString(dataToParse.RestaurantCity[i].Text));
@@ -132,7 +145,7 @@ namespace YellowPages
                 //      Console.WriteLine("Parsed: {0} + {1}", cities[i], cities[i].GetType());
 
                 phoneNumbers.Insert(i, Convert.ToString(dataToParse.RestaurantPhoneNumber[i].Text));
-                Console.WriteLine("Parsed: {0} + {1}", phoneNumbers[i], phoneNumbers[i].GetType());
+//                Console.WriteLine("Parsed: {0} + {1}", phoneNumbers[i], phoneNumbers[i].GetType());
 
 
             }

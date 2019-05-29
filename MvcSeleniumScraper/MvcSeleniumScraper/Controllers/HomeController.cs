@@ -15,8 +15,6 @@ namespace MvcSeleniumScraper.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "In the works!";
-
             return View();
         }
     }
