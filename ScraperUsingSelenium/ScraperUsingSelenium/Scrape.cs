@@ -45,9 +45,6 @@ namespace ScraperUsingSelenium
             IList<IWebElement> stockData = driver.FindElements(By.ClassName("simpTblRow"));
             Console.WriteLine("Total stocks: " + stockData.Count);
 
-            // driver.FindElement(By.CssSelector("button[data-action-value]")).GetAttribute("data-action-value");
-
-          //  IList<IWebElement> name_elements = driver.FindElements(By.CssSelector("//*[@aria-label='Symbol']//a"));
             IList<IWebElement> symbol_elements = driver.FindElements(By.XPath("//*[@aria-label='Symbol']"));
             IList<IWebElement> lastPrice_elements = driver.FindElements(By.XPath("//*[@aria-label='Last Price']"));
             IList<IWebElement> changePercent_elements = driver.FindElements(By.XPath("//*[@aria-label='Chg %']"));

@@ -12,22 +12,47 @@ namespace ScraperUsingIron
         public override void Init()
         {
             this.LoggingLevel = WebScraper.LogLevel.All;
-
-            HttpIdentity id = new HttpIdentity();
-            id.NetworkUsername = "webdriverproj";
-            id.NetworkPassword = "wdScraper135";
-            Identities.Add(id);
-            this.Request("https://www.msn.com/en-us/money/watchlist", Parse, id);
+            this.Request("https://markets.financialcontent.com/stocks/stocks/dashboard/mostactive", Parse);
         }
 
         public override void Parse(Response response)
-        {
-            // //*[@id="watchlistsummarytab"]/tr
-            // #movie-featured > div
-            foreach (var Trs in response.Css("#watchlistsummarytab  > tr"))
+        {         
+            foreach (var row in response.Css("div.watchlist_dynamic1 > table > tbody > tr").Skip(1))
             {
                 var stock = new Stock();
-                //stock.Symbol = 
+
+                foreach (var name in row.Css("td.rowtitle > a"))
+	            {
+                   // Console.Write(name.InnerHtml);
+                    stock.Name = name.InnerHtml;
+	            }
+
+                foreach (var symbol in row.Css("td.col_symbol"))
+	            {
+                   // Console.WriteLine(symbol.InnerHtml);
+                    stock.Symbol = symbol.InnerHtml;
+	            }
+
+                foreach (var price in row.Css("td.col_price"))
+	            {
+                  //  Console.WriteLine(price.InnerHtml);
+                    stock.Price = price.InnerHtml;
+	            }
+
+                foreach (var change in row.Css("td.col_changecompound"))
+	            {
+                  //  Console.WriteLine(change.InnerText);
+                    stock.ChangeDetails = change.InnerText;
+	            }
+                
+                foreach (var dollarVol in row.Css("td.col_dollarvolume"))
+	            {
+                   // Console.WriteLine("vol: {0}", dollarVol.InnerText);
+                    stock.Volume = dollarVol.InnerText;
+	            }
+
+                Scrape(stock, "Stock.jsonl");
+
             }
         }
     }

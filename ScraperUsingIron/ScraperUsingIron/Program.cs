@@ -10,6 +10,8 @@ namespace ScraperUsingIron
     {
         static void Main(string[] args)
         {
+            var scraper = new StockScraper();
+            scraper.Start();
         }
     }
 }
