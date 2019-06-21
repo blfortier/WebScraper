@@ -1,6 +1,7 @@
 ﻿using IronWebScraper;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,15 +19,14 @@ namespace ScraperUsingIron
         public override void Parse(Response response)
         {
             List<Stock> listOfStocks = new List<Stock>();
+            var stock = new Stock();
 
             foreach (var row in response.Css("div.watchlist_dynamic1 > table > tbody > tr").Skip(1))
             {
-                var stock = new Stock();
-
                 foreach (var name in row.Css("td.rowtitle > a"))
                 {
                     //  Console.Write(name.InnerHtml);
-                    stock.Name = name.InnerHtml;
+                    stock.Name = ParseName(name);
                 }
 
                 foreach (var symbol in row.Css("td.col_symbol"))
@@ -53,16 +53,31 @@ namespace ScraperUsingIron
                     stock.Volume = dollarVol.InnerText;
 	            }
 
-                Scrape(stock, "Stock.jsonl");
                 listOfStocks.Add(stock);
 
-               // Database.InsertStockDataIntoDB(stock);
+                Scrape(stock, "Stock.jsonl");
+
+              //  Database.InsertStockDataIntoDB(stock);
+
+            }
+        }
+
+        public static string ParseName(HtmlNode name)
+        {
+            StringBuilder changedName = new StringBuilder(name.InnerText);
+
+            for (int letter = 0; letter < changedName.Length; letter++)
+            {
+                if (changedName[letter] == '&')
+                {
+                    changedName.Replace("&amp;", "&");
+                }
             }
 
-            foreach (var stock in listOfStocks)
-            {
-                Database.InsertStockDataIntoDB(stock);
-            }
+            return changedName.ToString();
         }
     }
 }
+
+// Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True
+// Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
