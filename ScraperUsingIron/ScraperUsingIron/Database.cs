@@ -12,9 +12,8 @@ namespace ScraperUsingIron
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
         public static void InsertStockDataIntoDB(Stock stock)
         {
-            //  SelectTop5Stock(connectionString);
-            InsertIntoLatestScrape(stock, _connectionString);
-            InsertIntoScrapeHistory(stock, _connectionString);
+              InsertIntoLatestScrape(stock, _connectionString);
+              InsertIntoScrapeHistory(stock, _connectionString);
         }
 
         public static void Clear_Reset()
@@ -28,10 +27,10 @@ namespace ScraperUsingIron
 
             string latestScrape = @"IF EXISTS(SELECT* FROM FinancialContentCurrent WHERE Symbol = @Symbol)
                                         UPDATE FinancialContentCurrent
-                                        SET Name = @Name, Price = @Price, Change = @ChangeDetails, Volume = @Volume
+                                        SET Name = @Name, Price = @Price, PriceChange = @PriceChange, ChangePercent = @ChangePercent, Volume = @Volume
                                         WHERE Symbol = @Symbol 
                                     ELSE
-                                        INSERT INTO FinancialContentCurrent VALUES(@Name, @Symbol, @Price, @ChangeDetails, @Volume);";
+                                        INSERT INTO FinancialContentCurrent VALUES(@Name, @Symbol, @Price, @PriceChange, @ChangePercent, @Volume);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -44,7 +43,8 @@ namespace ScraperUsingIron
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@Price", stock.Price));
-                        command.Parameters.Add(new SqlParameter("@ChangeDetails", stock.ChangeDetails));
+                        command.Parameters.Add(new SqlParameter("@PriceChange", stock.PriceChange));
+                        command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
 
                         command.ExecuteNonQuery();
@@ -61,7 +61,7 @@ namespace ScraperUsingIron
 
         private static void InsertIntoScrapeHistory(Stock stock, string connectionString)
         {
-            string scrapeHistory = "INSERT INTO FinancialContentHistory VALUES (@Name, @Symbol, @Price, @ChangeDetails, @Volume);";
+            string scrapeHistory = "INSERT INTO FinancialContentHistory VALUES (@Name, @Symbol, @Price, @PriceChange, @ChangePercent, @Volume);";
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
@@ -74,7 +74,8 @@ namespace ScraperUsingIron
                         command.Parameters.Add(new SqlParameter("@Name", stock.Name));
                         command.Parameters.Add(new SqlParameter("@Symbol", stock.Symbol));
                         command.Parameters.Add(new SqlParameter("@Price", stock.Price));
-                        command.Parameters.Add(new SqlParameter("@ChangeDetails", stock.ChangeDetails));
+                        command.Parameters.Add(new SqlParameter("@PriceChange", stock.PriceChange));
+                        command.Parameters.Add(new SqlParameter("@ChangePercent", stock.ChangePercent));
                         command.Parameters.Add(new SqlParameter("@Volume", stock.Volume));
 
                         command.ExecuteNonQuery();

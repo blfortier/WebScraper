@@ -12,6 +12,7 @@ namespace ScraperUsingIron
         {
             var scraper = new StockScraper();
             scraper.Start();
+            scraper.AddStockToDatabase();
         }
     }
 }

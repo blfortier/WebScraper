@@ -10,6 +10,8 @@ namespace ScraperUsingIron
 {
     public class StockScraper : WebScraper
     {
+        List<Stock> listOfStocks = new List<Stock>();
+
         public override void Init()
         {
             this.LoggingLevel = WebScraper.LogLevel.All;
@@ -18,47 +20,62 @@ namespace ScraperUsingIron
 
         public override void Parse(Response response)
         {
-            List<Stock> listOfStocks = new List<Stock>();
-            var stock = new Stock();
 
             foreach (var row in response.Css("div.watchlist_dynamic1 > table > tbody > tr").Skip(1))
             {
+                 var stock = new Stock();
+
                 foreach (var name in row.Css("td.rowtitle > a"))
                 {
-                    //  Console.Write(name.InnerHtml);
+                    Console.Write(name.InnerHtml);
                     stock.Name = ParseName(name);
                 }
 
                 foreach (var symbol in row.Css("td.col_symbol"))
 	            {
-                 //   Console.WriteLine(symbol.InnerHtml);
+                    Console.WriteLine(symbol.InnerHtml);
                     stock.Symbol = symbol.InnerHtml;
 	            }
 
                 foreach (var price in row.Css("td.col_price"))
 	            {
-                //    Console.WriteLine(price.InnerHtml);
+                    Console.WriteLine(price.InnerHtml);
                     stock.Price = price.InnerHtml;
 	            }
 
                 foreach (var change in row.Css("td.col_changecompound"))
 	            {
-                  //  Console.WriteLine(change.InnerText);
-                    stock.ChangeDetails = change.InnerText;
+                    //  Console.WriteLine(change.InnerText);
+
+                    //  ParseChangeDetails(change);
+
+                     List<string> changeInfo = change.InnerText.Split().ToList();
+                    Console.WriteLine("change: {0}, percent: {1}", changeInfo[0], changeInfo[1]);
+
+                    stock.PriceChange = changeInfo[0];
+                    stock.ChangePercent = changeInfo[1];
 	            }
                 
                 foreach (var dollarVol in row.Css("td.col_dollarvolume"))
 	            {
-                  //  Console.WriteLine("vol: {0}", dollarVol.InnerText);
+                    Console.WriteLine("vol: {0}", dollarVol.InnerText);
                     stock.Volume = dollarVol.InnerText;
 	            }
 
+                Console.WriteLine();
+
                 listOfStocks.Add(stock);
-
                 Scrape(stock, "Stock.jsonl");
+            }
+        }
 
-              //  Database.InsertStockDataIntoDB(stock);
-
+        public void AddStockToDatabase()
+        {
+            //Database.Clear_Reset();
+            foreach (var stock in listOfStocks)
+            {
+                Console.WriteLine(stock.Name);
+                Database.InsertStockDataIntoDB(stock);
             }
         }
 
@@ -76,8 +93,27 @@ namespace ScraperUsingIron
 
             return changedName.ToString();
         }
+
+        public static List<string> ParseChange(HtmlNode changePercent)
+        {
+            List<string> changes = changePercent.InnerText.Split().ToList();
+            string percentChange = changes[1];
+
+            StringBuilder parsedString = new StringBuilder(percentChange);
+
+            List<string> formattedStrings = new List<string>();
+
+            parsedString.Remove(parsedString[0],1);
+            for (int i = 0; i < parsedString.Length; i++)
+            {
+                if (parsedString[i] == '(' || parsedString[i] == ')')
+                    parsedString.Remove(parsedString[i], 1);
+            }
+            formattedStrings.Add(changes[0]);
+            formattedStrings.Add(parsedString.ToString());
+
+            return formattedStrings;
+        }
     }
 }
 
-// Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True
-// Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
