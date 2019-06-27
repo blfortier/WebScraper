@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronScraperMVC", "IronScraperMVC\IronScraperMVC.csproj", "{74352002-9050-4A1D-BD14-D55E0FE78993}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74352002-9050-4A1D-BD14-D55E0FE78993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74352002-9050-4A1D-BD14-D55E0FE78993}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74352002-9050-4A1D-BD14-D55E0FE78993}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74352002-9050-4A1D-BD14-D55E0FE78993}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {67DEB4A8-12DF-48D7-8EE0-8D8926DA8021}
+	EndGlobalSection
+EndGlobal

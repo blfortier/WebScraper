@@ -90,6 +90,7 @@ namespace MvcSeleniumScraper.ScraperService
                 }
                 con.Close();
             }
+
         }
 
         public static void DeleteTableData()
