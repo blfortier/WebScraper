@@ -24,6 +24,7 @@ namespace ScraperUsingIron
         public string Volume { get => _volume; set => _volume = value; }
 
         public Stock() { }
+
         public Stock(string name, string symb, string price, string change, string changePercent, string volume)
         {
             this.Name = name;

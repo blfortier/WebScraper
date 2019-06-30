@@ -10,6 +10,7 @@ namespace ScraperUsingIron
     public class Database
     {
         private const string _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StockData;Integrated Security=True";
+
         public static void InsertStockDataIntoDB(Stock stock)
         {
               InsertIntoLatestScrape(stock, _connectionString);

@@ -26,26 +26,22 @@ namespace ScraperUsingIron
 
                 foreach (var name in row.Css("td.rowtitle > a"))
                 {
-                    Console.Write(name.InnerHtml);
                     stock.Name = ParseName(name);
                 }
 
                 foreach (var symbol in row.Css("td.col_symbol"))
 	            {
-                    Console.WriteLine(symbol.InnerHtml);
                     stock.Symbol = symbol.InnerHtml;
 	            }
 
                 foreach (var price in row.Css("td.col_price"))
 	            {
-                    Console.WriteLine(price.InnerHtml);
                     stock.Price = price.InnerHtml;
 	            }
 
                 foreach (var change in row.Css("td.col_changecompound"))
 	            {
-                     List<string> changeInfo = change.InnerText.Split().ToList();
-                    Console.WriteLine("change: {0}, percent: {1}", changeInfo[0], changeInfo[1]);
+                    List<string> changeInfo = change.InnerText.Split().ToList();
 
                     stock.PriceChange = changeInfo[0];
                     stock.ChangePercent = changeInfo[1];
@@ -53,7 +49,6 @@ namespace ScraperUsingIron
                 
                 foreach (var dollarVol in row.Css("td.col_dollarvolume"))
 	            {
-                    Console.WriteLine("vol: {0}", dollarVol.InnerText);
                     stock.Volume = dollarVol.InnerText;
 	            }
 
@@ -68,7 +63,6 @@ namespace ScraperUsingIron
         {
             foreach (var stock in listOfStocks)
             {
-               // Console.WriteLine(stock.Name);
                 Database.InsertStockDataIntoDB(stock);
             }
         }
