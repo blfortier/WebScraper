@@ -44,7 +44,8 @@ namespace ScraperUsingIron
                     List<string> changeInfo = change.InnerText.Split().ToList();
 
                     stock.PriceChange = changeInfo[0];
-                    stock.ChangePercent = changeInfo[1];
+                    stock.ChangePercent = changeInfo[1].Trim('(').Trim(')');
+                    Console.WriteLine("cp: {0}", stock.ChangePercent);
 	            }
                 
                 foreach (var dollarVol in row.Css("td.col_dollarvolume"))
@@ -55,6 +56,7 @@ namespace ScraperUsingIron
                 Console.WriteLine();
 
                 listOfStocks.Add(stock);
+                stock.DisplayStockInfo();
                 Scrape(stock, "Stock.jsonl");
             }
         }
@@ -78,27 +80,6 @@ namespace ScraperUsingIron
             }
 
             return changedName.ToString();
-        }
-
-        public static List<string> ParseChange(HtmlNode changePercent)
-        {
-            List<string> changes = changePercent.InnerText.Split().ToList();
-            string percentChange = changes[1];
-
-            StringBuilder parsedString = new StringBuilder(percentChange);
-
-            List<string> formattedStrings = new List<string>();
-
-            parsedString.Remove(parsedString[0],1);
-            for (int i = 0; i < parsedString.Length; i++)
-            {
-                if (parsedString[i] == '(' || parsedString[i] == ')')
-                    parsedString.Remove(parsedString[i], 1);
-            }
-            formattedStrings.Add(changes[0]);
-            formattedStrings.Add(parsedString.ToString());
-
-            return formattedStrings;
         }
     }
 }
