@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using IronScraperMVC.Models;
+using IronScraperMVC.ScraperService;
 
 namespace IronScraperMVC.Controllers
 {
@@ -18,6 +19,17 @@ namespace IronScraperMVC.Controllers
         public ActionResult Index()
         {
             return View(db.FinancialContentCurrents.ToList());
+        }
+
+        public ActionResult NewScrape()
+        {
+            if (ModelState.IsValid)
+            {
+                var scraper = new Scraper();
+                scraper.Start();
+                scraper.AddStockToDatabase();
+            }
+            return Redirect("Index");
         }
 
         // GET: FinancialContentCurrents/Details/5
