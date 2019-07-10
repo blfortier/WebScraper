@@ -10,46 +10,51 @@
     <button>@Html.ActionLink("Update Stock Info", "NewScrape", "FinancialContentCurrents")</button>
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceChange)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ChangePercent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Volume)
-        </th>
-        <th></th>
-    </tr>
+ 
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceChange)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChangePercent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volume)
+            </th>
+            <th></th>
+        </tr>
+   
+   
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PriceChange)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ChangePercent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Volume)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Symbol }) 
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceChange)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChangePercent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.Symbol })
+                </td>
+            </tr>
+        }
+    
 
 </table>
