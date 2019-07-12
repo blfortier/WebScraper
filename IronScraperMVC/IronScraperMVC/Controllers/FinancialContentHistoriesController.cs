@@ -20,6 +20,17 @@ namespace IronScraperMVC.Controllers
             return View(db.FinancialContentHistories.ToList());
         }
 
+        [Authorize]
+        public ActionResult ClearStockHistory()
+        {
+            if (ModelState.IsValid)
+            {
+                ScraperService.Database.Clear_Reset();
+            }
+            return Redirect("/FinancialContentCurrents");
+        }
+
+
         // GET: FinancialContentHistories/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,10 +46,6 @@ namespace IronScraperMVC.Controllers
             return View(financialContentHistory);
         }
 
-        // GET: FinancialContentHistories/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    
     }
 }
