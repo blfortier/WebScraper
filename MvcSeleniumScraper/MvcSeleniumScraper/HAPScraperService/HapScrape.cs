@@ -63,9 +63,9 @@ namespace MvcSeleniumScraper.HAPScraperService
             string modifiedString = match.Groups[1].Value;
 
             if (innerText.Attributes["class"].Value == "green")
-                modifiedString = "+" + modifiedString + "%";
+                modifiedString = "+" + modifiedString;
             else
-                modifiedString = "-" + modifiedString + "%";
+                modifiedString = "-" + modifiedString;
 
             return modifiedString;
         }

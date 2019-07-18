@@ -5,10 +5,10 @@
 
 <div class="container" style="font-family: 'Monda', sans-serif; text-indent: 40px;">
     <p >
-            The Finance Scraper capstone project was such a learning experience. WIth an outline and no teachings of the
+            The Finance Scraper capstone project was such a learning experience. With an outline and no teachings of the
         technology required to complete the project, it was a challenge I was excited to tackle. I was tasked with
         creating a program that would pull stock data from various sources using various technologies (Selenium,
-        HTML Agility-Pack, and RESTSharp). I needed to scrape the data and insert it into a database. I would also
+        HTML Agility-Pack, and RESTSharp). I needed to scrape the data and insert it into a database using Microsoft SQL Server. I would also
         need to be able to return a history of past scraped data, request a new scrape, and see the most recent scraped data.
     </p>
 
@@ -42,11 +42,9 @@
         end as well. Using HTML Agility Pack, I loaded a page from the Nasdaq website. It contained a pre populated stock list, the Most
         Active watchlist, and I was able to extract data from that. I stored the table as my root node, and accessed the children nodes to
         obtain the stock info. My biggest issue with HAP was that originally, I was trying to scrape from a watchlist that I created on the
-        Edward Jones website. An issue arose though, because this site doesn’t require a log-in. My stock list was being stored in my cache
-        so there was nothing in the DOM for me to scrape. I talked about this issue with a classmate and they were able to help me see this.
-        After finishing the HAP scraper, I created another scraper using RestSharp and a RESTful API from World Trading Data. Their site had
-        great documentation so I was able to grab the stock info from the API in no time. I used Newtonsoft to deserialize my JSON response
-        and was soon able to insert this data into my database as well. The database aspect was pretty straightforward seeing as it was the
-        same for all scrapers. The only difference was the parameter and table names.
+        a site that didn't store my stocks in the DOM. After finishing the HAP scraper, I created another scraper using RestSharp and a RESTful 
+        API from World Trading Data. Their site had great documentation so I was able to grab the stock info from the API in no time. I used 
+        Newtonsoft to deserialize my JSON response and was soon able to insert this data into my database as well. The database aspect was pretty 
+        straightforward seeing as it was the same for all scrapers. The only difference was the parameter and table names.
     </p>
 </div>

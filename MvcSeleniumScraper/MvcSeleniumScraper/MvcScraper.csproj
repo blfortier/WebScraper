@@ -55,10 +55,6 @@
     <Reference Include="RestSharp, Version=105.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.1\lib\net45\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="IronWebScraper, Version=4.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronWebScraper.4.0.4.3\lib\net452\IronWebScraper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -211,9 +207,6 @@
     <Compile Include="HAPScraperService\Database.cs" />
     <Compile Include="HAPScraperService\HapScrape.cs" />
     <Compile Include="HAPScraperService\Stock.cs" />
-    <Compile Include="IronScraperService\ISDatabase.cs" />
-    <Compile Include="IronScraperService\ISStock.cs" />
-    <Compile Include="IronScraperService\ISStockScraper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
